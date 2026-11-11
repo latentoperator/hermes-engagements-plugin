@@ -304,6 +304,12 @@ def test_desktop_claims_name_the_surface_that_was_run():
     starter = readme_line("- **Starter prompts on an empty page.**")
     assert "front-end tests" in starter
     assert "neither was clicked through" in starter, starter
+    adding = readme_line("- **Add a client and Add a project.**")
+    assert "front-end tests" in adding
+    # Both pairs were clicked through, but nothing was sent; the claim has to keep that limit
+    # for as long as the evidence lists it.
+    assert "sending a drafted prompt was not part of that pass" in adding, adding
+    assert "not checked for d13: sending a drafted prompt" in " ".join(evidence.split())
     chat = readme_line("- **Start a chat** (Desktop)")
     assert "front-end tests" in chat
     assert "was not" in chat, chat

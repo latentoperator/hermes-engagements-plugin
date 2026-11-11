@@ -174,7 +174,7 @@ const Badge = component('Badge', props =>
 )
 const Button = component('Button', props =>
   // The host Button forwards ``title`` as the accessible label; an icon-only button needs it.
-  jsx('button', { type: 'button', disabled: props.disabled, onClick: props.onClick, title: props.title, children: props.children })
+  jsx('button', { type: 'button', disabled: props.disabled, onClick: props.onClick, title: props.title, style: props.style, children: props.children })
 )
 const Codicon = component('Codicon', () => jsx('span', { className: 'codicon', children: '' }))
 const CopyButton = component('CopyButton', props => jsx('button', { type: 'button', children: 'copy', 'data-copy': props.text }))
@@ -431,9 +431,40 @@ function snapshot() {
       }
     })
   )
+  // Layout the text cannot show: whether a button keeps its label on one line, and whether the
+  // element that holds it also holds a text field, which is what "beside the search" means.
+  const buttons = []
+  const holdsInput = node => {
+    let found = false
+    walk(node, element => {
+      if (element.type === 'input') found = true
+    })
+    return found
+  }
+  const visit = (node, parent) => {
+    if (node === null || node === undefined || typeof node === 'string') return
+    if (Array.isArray(node)) {
+      node.forEach(child => visit(child, parent))
+      return
+    }
+    if (node.type === 'button') {
+      const style = (node.props && node.props.style) || {}
+      buttons.push({
+        text: text(node),
+        nowrap: style.whiteSpace === 'nowrap' && style.flexShrink === 0,
+        besideInput: parent ? holdsInput(parent) : false,
+        // What shares the button's own container: a pair of actions wraps as one unit only
+        // when nothing else is in there with them.
+        group: parent ? (parent.children || []).filter(child => child && typeof child !== 'string').map(child => text(child)) : []
+      })
+    }
+    if (node.children) node.children.forEach(child => visit(child, node))
+  }
+  tree.forEach(node => visit(node, null))
   return {
     text: tree.map(textOf).join('\n').replace(/[ \t]+/g, ' ').trim(),
     inputs,
+    buttons,
     ids,
     chips,
     pending: requests.filter(request => !request.done).map(request => request.path),

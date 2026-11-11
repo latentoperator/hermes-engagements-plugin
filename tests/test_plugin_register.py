@@ -1,6 +1,7 @@
 """register(ctx) and plugin.yaml: what the plugin tells Hermes it provides, and nothing more."""
 
 import ast
+import re
 import shutil
 from pathlib import Path
 
@@ -152,11 +153,16 @@ def test_skills_are_registered_with_a_description_when_the_files_exist(monkeypat
 def test_the_starter_prompts_name_the_skill_the_host_lists():
     """``ctx.register_skill`` qualifies a plugin skill as ``<plugin name>:<name>`` and
     ``_plugin_skill_prompt_rows`` puts that exact string in ``<available_skills>``, which is what
-    ``skill_view`` resolves. Both front ends must therefore name ``engagements:suggest-clients``."""
+    ``skill_view`` resolves. Both front ends must therefore name ``engagements:suggest-clients``,
+    and the "Add a project" prompt (decision D13) must name ``engagements:onboard-client``."""
+    project = re.compile(
+        r"Help me add a project for the client [^\n]{1,40}? to Engagements\. Use the engagements:onboard-client skill\."
+    )
     for path in (ROOT / "desktop" / "plugin.js", ROOT / "dashboard" / "dist" / "index.js"):
         source = path.read_text(encoding="utf-8")
         assert "engagements:suggest-clients" in source, path.name
         assert "engagements:onboard-client" in source, path.name
+        assert project.search(source), path.name
 
 
 def test_register_twice_keeps_no_state_between_contexts(monkeypatch, tmp_path):

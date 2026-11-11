@@ -60,7 +60,10 @@ def run(frontend, steps, tmp_path, *, privacy=False, session=None, draft_works=N
         scenario["clipboardFail"] = clipboard_fail
     path = tmp_path / "scenario.json"
     path.write_text(json.dumps(scenario), encoding="utf-8")
-    result = subprocess.run([NODE, str(PROBE), str(path)], capture_output=True, text=True, check=False, timeout=180)
+    # Node writes UTF-8 whatever the platform; without an explicit encoding Windows decodes it
+    # with the locale code page and mangles any non-ASCII text on screen, such as "…".
+    result = subprocess.run([NODE, str(PROBE), str(path)], capture_output=True, text=True, encoding="utf-8",
+                            check=False, timeout=180)
     assert result.returncode == 0, f"the {frontend} front end threw:\n{result.stderr}"
     return json.loads(result.stdout)["snapshots"]
 
@@ -645,13 +648,20 @@ def hiding_body(which):
 @pytest.mark.parametrize("frontend", list(FRONT_ENDS))
 @pytest.mark.parametrize("which", ["has-a-client", "unassigned-project", "unavailable"])
 def test_the_starter_prompts_hide_when_they_do_not_apply(frontend, which, tmp_path):
-    """A populated library, or one that cannot be written to, keeps today's message and no starters."""
+    """A populated library, or one that cannot be written to, keeps today's message and no starters.
+
+    A populated page has its own "Add a client" under the search (decision D13), so the starter
+    block is recognised by its other button and its story line rather than by that label.
+    """
     snapshots = run(frontend, [
         {"op": "render"},
         {"op": "resolve", "path": path(frontend, "/overview"), "body": hiding_body(which)},
     ], tmp_path)
-    assert starter_labels(snapshots[-1]["text"]) == []
+    text = snapshots[-1]["text"]
+    assert "Find clients in my past chats" not in text
+    assert "Find clients from chats you have already had" not in text
     if which == "unavailable":
+        assert starter_labels(text) == []
         assert UNAVAILABLE_TEXT in snapshots[-1]["text"], "the error state keeps its own message"
         assert snapshots[-1]["inputs"] == [], "nothing to search when the library cannot be read"
     else:
@@ -756,6 +766,206 @@ def test_the_web_tab_still_shows_the_prompt_when_the_clipboard_is_unavailable(tm
     text = snapshots[-1]["text"]
     assert SUGGEST_PROMPT in text
     assert "Copy this prompt into a new chat." in text
+
+
+# --- "Add a client" and "Add a project" on a populated page (decision D13) -------------------------
+#
+# Both only draft or copy a prompt, like the starters: nothing is sent and no request is made.
+
+def project_prompt(client_id):
+    return (
+        f"Help me add a project for the client {client_id} to Engagements. "
+        "Use the engagements:onboard-client skill. Ask me only what you need."
+    )
+
+
+POPULATED = overview(clients=[client_row("acme-bakery", "Acme Bakery", projects=[
+    project_row("acme-website", "Acme Website", {"id": "acme-bakery", "name": "Acme Bakery", "known": True}),
+])])
+ACME_PROJECT = record_body("acme-website", "Acme Website", "project",
+                           client={"id": "acme-bakery", "name": "Acme Bakery", "known": True})
+
+
+def open_record(frontend, record_id, name, body, *, overview_body=POPULATED):
+    return [
+        {"op": "render"},
+        {"op": "resolve", "path": path(frontend, "/overview"), "body": overview_body},
+        select(record_id, name),
+        {"op": "resolve", "path": path(frontend, f"/record/{record_id}"), "body": body},
+    ]
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+@pytest.mark.parametrize("which", ["has-a-client", "unassigned-project"])
+def test_a_populated_page_shows_add_a_client_under_the_search(frontend, which, tmp_path):
+    snapshots = run(frontend, [
+        {"op": "render"},
+        {"op": "resolve", "path": path(frontend, "/overview"), "body": hiding_body(which)},
+    ], tmp_path)
+    text = snapshots[-1]["text"]
+    assert text.count("Add a client") == 1, text
+    assert "Add a project" not in text, "no record is open yet"
+    assert snapshots[-1]["inputs"] == [{"placeholder": "Find a client or project", "value": ""}]
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+def test_add_a_client_has_a_row_of_its_own_and_the_prompt_buttons_never_wrap(frontend, tmp_path):
+    """The list column is too narrow for the search field and a button side by side. In a real
+    browser, a button beside the field cut the placeholder short and wrapped its own label over
+    two or three lines. So the field keeps its full-width row, the button sits on the next one,
+    and both prompt buttons carry an inline no-wrap style (a class may not be in the host's CSS)."""
+    snapshots = run(frontend, open_record(frontend, "acme-bakery", "Acme Bakery",
+                                          record_body("acme-bakery", "Acme Bakery")), tmp_path)
+    buttons = {b["text"]: b for b in snapshots[-1]["buttons"] if b["text"] in ("Add a client", "Add a project")}
+    assert set(buttons) == {"Add a client", "Add a project"}, snapshots[-1]["buttons"]
+    assert buttons["Add a client"]["besideInput"] is False, "the search field keeps a row to itself"
+    assert buttons["Add a client"]["nowrap"], "the label must stay on one line"
+    assert buttons["Add a project"]["nowrap"], "the label must stay on one line"
+
+
+def test_desktop_keeps_a_client_records_two_actions_together(tmp_path):
+    """Loose in the header row, the pair split in a narrower Desktop window: "Add a project"
+    stayed at the right of the first line and "Start a chat" dropped to the left of the next.
+    In a container of their own they wrap as one unit."""
+    snapshots = run("desktop", open_record("desktop", "acme-bakery", "Acme Bakery",
+                                           record_body("acme-bakery", "Acme Bakery")), tmp_path)
+    buttons = {b["text"]: b for b in snapshots[-1]["buttons"]}
+    assert buttons["Add a project"]["group"] == ["Add a project", "Start a chat"], buttons["Add a project"]
+    assert buttons["Start a chat"]["group"] == ["Add a project", "Start a chat"], buttons["Start a chat"]
+    assert buttons["Start a chat"]["nowrap"], "the label must stay on one line"
+
+
+def test_desktop_add_a_client_on_a_populated_page_drafts_the_starter_prompt(tmp_path):
+    snapshots = run("desktop", [
+        {"op": "render"},
+        {"op": "resolve", "path": "/overview", "body": POPULATED},
+        {"op": "click", "text": "Add a client"},
+    ], tmp_path, draft_works=True)
+    calls = snapshots[-1]["calls"]
+    assert calls["newChat"] == [True]
+    assert calls["setDraft"] == [{"target": "new", "draft": ADD_PROMPT}]
+    assert calls["composerSubmit"] == 0, "the user presses Enter; the button never sends"
+    assert snapshots[-1]["notifications"][-1]["message"] == "New chat ready. Press Enter to send the prompt."
+
+
+def test_the_web_tab_add_a_client_on_a_populated_page_copies_the_starter_prompt(tmp_path):
+    snapshots = run("web", [
+        {"op": "render"},
+        {"op": "resolve", "path": path("web", "/overview"), "body": POPULATED},
+        {"op": "click", "text": "Add a client"},
+    ], tmp_path)
+    calls = snapshots[-1]["calls"]
+    assert calls["clipboard"] == [ADD_PROMPT]
+    text = snapshots[-1]["text"]
+    assert ADD_PROMPT in text and "Paste it into a new chat" in text
+    assert calls["newChat"] == [] and calls["composerSubmit"] == 0
+    assert snapshots[-1]["pending"] == [], "a copy starts no request"
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+def test_a_client_record_shows_add_a_project(frontend, tmp_path):
+    snapshots = run(frontend, open_record(frontend, "acme-bakery", "Acme Bakery",
+                                          record_body("acme-bakery", "Acme Bakery")), tmp_path)
+    text = snapshots[-1]["text"]
+    assert text.count("Add a project") == 1, text
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+def test_a_project_record_does_not_show_add_a_project(frontend, tmp_path):
+    snapshots = run(frontend, open_record(frontend, "acme-website", "Acme Website", ACME_PROJECT), tmp_path)
+    text = snapshots[-1]["text"]
+    assert "Acme Website" in text and "project" in text
+    assert "Add a project" not in text
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+def test_a_record_the_page_cannot_list_does_not_show_add_a_project(frontend, tmp_path):
+    """A selection the latest list no longer offers shows its reason and no actions at all."""
+    snapshots = run(frontend, [
+        *open_record(frontend, "acme-bakery", "Acme Bakery", record_body("acme-bakery", "Acme Bakery")),
+        {"op": "click", "text": "Refresh"},
+        {"op": "resolve", "path": path(frontend, "/overview"),
+         "body": overview(clients=[client_row("riverbend-dental", "Riverbend Dental")])},
+    ], tmp_path)
+    assert "Add a project" in snapshots[3]["text"], "the record offered it while it was listed"
+    text = snapshots[-1]["text"]
+    assert "This record is not listed" in text
+    assert "Add a project" not in text
+
+
+def test_desktop_add_a_project_drafts_the_prompt_with_the_client_id(tmp_path):
+    snapshots = run("desktop", [
+        *open_record("desktop", "acme-bakery", "Acme Bakery", record_body("acme-bakery", "Acme Bakery")),
+        {"op": "click", "text": "Add a project"},
+    ], tmp_path, draft_works=True)
+    calls = snapshots[-1]["calls"]
+    assert calls["newChat"] == [True]
+    assert calls["setDraft"] == [{"target": "new", "draft": project_prompt("acme-bakery")}]
+    assert calls["composerSubmit"] == 0, "the user presses Enter; the button never sends"
+    assert snapshots[-1]["pending"] == [], "a draft starts no request"
+
+
+def test_desktop_add_a_project_drafts_the_id_under_privacy_like_start_a_chat(tmp_path):
+    """Privacy mode changes what is on screen, not what a draft carries: "Start a chat" drafts
+    `/client <id>` either way, and the notice names no record."""
+    snapshots = run("desktop", [
+        *open_record("desktop", "acme-bakery", "Acme Bakery", record_body("acme-bakery", "Acme Bakery")),
+        {"op": "togglePrivacy"},
+        {"op": "click", "text": "Add a project"},
+    ], tmp_path, draft_works=True)
+    calls = snapshots[-1]["calls"]
+    assert calls["setDraft"] == [{"target": "new", "draft": project_prompt("acme-bakery")}]
+    assert "acme-bakery" not in snapshots[-1]["text"]
+    assert "acme-bakery" not in snapshots[-1]["notifications"][-1]["message"]
+
+
+def test_the_web_tab_add_a_project_copies_the_prompt_with_the_client_id(tmp_path):
+    snapshots = run("web", [
+        *open_record("web", "acme-bakery", "Acme Bakery", record_body("acme-bakery", "Acme Bakery")),
+        {"op": "click", "text": "Add a project"},
+    ], tmp_path)
+    calls = snapshots[-1]["calls"]
+    assert calls["clipboard"] == [project_prompt("acme-bakery")]
+    text = snapshots[-1]["text"]
+    assert project_prompt("acme-bakery") in text and "Paste it into a new chat" in text
+    assert calls["newChat"] == [] and calls["composerSubmit"] == 0
+    assert snapshots[-1]["pending"] == [], "a copy starts no request"
+
+
+def test_the_web_tab_add_a_project_hides_the_id_on_screen_under_privacy(tmp_path):
+    """The shown prompt hides the id as the "Start a chat" row does (`/client …`); the
+    clipboard holds the full prompt, as the row's command would."""
+    snapshots = run("web", [
+        *open_record("web", "acme-bakery", "Acme Bakery", record_body("acme-bakery", "Acme Bakery")),
+        {"op": "togglePrivacy"},
+        {"op": "click", "text": "Add a project"},
+    ], tmp_path)
+    assert snapshots[-1]["calls"]["clipboard"] == [project_prompt("acme-bakery")]
+    text = snapshots[-1]["text"]
+    assert project_prompt("…") in text
+    assert "acme-bakery" not in text
+
+
+@pytest.mark.parametrize("frontend", list(FRONT_ENDS))
+@pytest.mark.parametrize("state", ["missing", "unavailable", "broken-library-yaml", "failed"])
+def test_neither_add_button_shows_when_the_overview_is_not_ok(frontend, state, tmp_path):
+    """A button must not promise work that cannot be saved. A missing library keeps its starter
+    block, whose own "Add a client" is the only one on the page."""
+    if state == "failed":
+        step = {"op": "reject", "path": path(frontend, "/overview"), "message": "The Engagements backend is not running."}
+    elif state == "missing":
+        step = {"op": "resolve", "path": path(frontend, "/overview"), "body": overview(status="missing", message=MISSING)}
+    else:
+        message = UNAVAILABLE_TEXT if state == "unavailable" else "library.yaml could not be read."
+        step = {"op": "resolve", "path": path(frontend, "/overview"), "body": overview(status="unavailable", message=message)}
+    snapshots = run(frontend, [{"op": "render"}, step], tmp_path)
+    text = snapshots[-1]["text"]
+    assert "Add a project" not in text
+    assert snapshots[-1]["inputs"] == [], "no search field, so no Add a client beside one"
+    if state == "missing":
+        assert text.count("Add a client") == 1 and "Find clients in my past chats" in text
+    else:
+        assert "Add a client" not in text
 
 
 # --- the Node switch itself -------------------------------------------------------------------

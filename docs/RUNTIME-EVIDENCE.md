@@ -468,7 +468,26 @@ dashboard on a non-loopback bind, and Desktop's own Plugins-settings switch (the
 The empty-page starter prompts (D12) were added after these runs and are not runtime-exercised on either front end. Their
 behaviour is covered only by `tests/test_dashboard_frontends.py`, which loads the real `desktop/plugin.js` and
 `dashboard/dist/index.js` under Node against a mocked SDK and drives the buttons; no Desktop or browser click-through was performed
-for them.
+for them. "Add a client" on a populated page and "Add a project" on a client record (D13) were added later still. They are covered by
+the same front-end tests, and both halves were clicked through on 2026-11-11 against a scratch home holding the demo library, with
+real mouse events sent over the Chrome DevTools Protocol.
+
+**Web dashboard tab, on loopback.** Each button showed its prompt and copied it to the clipboard, and neither sent a request; the
+only requests in the pass were the record reads from opening records. "Add a project" was absent from a project record. With
+Privacy on, the prompt on screen showed "…" for the id while the copied prompt kept it. At window widths of 420, 700, 1042 and
+1350 px the search field kept its own row with its placeholder whole, and both labels stayed on one line.
+
+**Hermes Desktop**, a packaged Linux build of a local Hermes source checkout (v0.23.0+128), with scratch Electron user data, no
+model provider configured, and the Desktop half enabled through `hermes.desktop.pluginDecisions.v2`. "Add a client" opened a new
+chat with its prompt in the composer, and "Add a project" on a client record did the same with that client's id, replacing the
+earlier draft. Neither was sent: the composer held the text and the session list still read "No sessions yet". "Add a project" was
+absent from a project record. With Privacy on, the page hid the name and id while the drafted prompt kept the id, as "Start a
+chat" does. At window widths from 800 to 1440 px the search field kept its own row with its placeholder whole and every label
+stayed on one line; from 1100 px up the two record actions sat on the name's line, and at 1000 px and below they wrapped to the
+next line together.
+
+Not checked for D13: sending a drafted prompt and the agent's reply (no model was configured), the copy fallback when a draft
+cannot be placed, a stock Desktop release build, and Desktop on Windows or macOS.
 
 ## v1 status (2026-11-06)
 

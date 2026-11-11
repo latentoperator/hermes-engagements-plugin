@@ -1,8 +1,9 @@
 // Engagements for Hermes Desktop: a read-only Clients page, a sidebar entry, a status-bar
 // chip that shows which client the focused chat is bound to, and an "Open Clients" command
 // (SPEC 6.7). Nothing here writes to the library or to a binding: every request is a GET to
-// this plugin's own backend (dashboard/plugin_api.py), and "Start a chat" and the starter
-// prompts on an empty page only place text in a new chat's composer for the user to send.
+// this plugin's own backend (dashboard/plugin_api.py), and "Start a chat", "Add a client",
+// "Add a project" and the starter prompts on an empty page only place text in a new chat's
+// composer for the user to send.
 //
 // Loaded uncompiled by Desktop, so there is no JSX: jsx()/jsxs() from react/jsx-runtime.
 import {
@@ -122,6 +123,14 @@ function shown(text, hidden) {
 
 const muted = 'text-(--ui-text-tertiary)'
 
+// Inline, not classes: Desktop's compiled CSS only carries classes it uses itself. A prompt
+// button keeps its label on one line, and its row keeps the button at its own width instead of
+// stretching it across the column.
+const NOWRAP = { whiteSpace: 'nowrap', flexShrink: 0 }
+const NOWRAP_ROW = { display: 'flex', justifyContent: 'flex-start' }
+// A record header's actions, held together so the header wraps them as a pair.
+const ACTIONS = { flexShrink: 0 }
+
 function statusBadge(status) {
   if (status === 'active') return jsx(Badge, { variant: 'success', children: 'active' })
   if (!status) return null
@@ -164,14 +173,29 @@ const SUGGEST_PROMPT =
 
 const ADD_PROMPT = 'Help me add a client to Engagements. Use the engagements:onboard-client skill. Ask me only what you need.'
 
+// "Add a project" on a client record (decision D13). It carries the client's id and nothing else
+// from the record, the same id "Start a chat" places in the composer as /client <id>.
+function projectPrompt(id) {
+  return `Help me add a project for the client ${id} to Engagements. Use the engagements:onboard-client skill. Ask me only what you need.`
+}
+
 const STORY = 'Find clients from chats you have already had, or add one now.'
 
+// The notices name no record, so they show nothing identifying under privacy mode either.
+const PROMPT_MESSAGES = {
+  ready: 'New chat ready. Press Enter to send the prompt.',
+  copied: 'Copied the prompt. Paste it into the new chat and press Enter.',
+  manual: 'Type the prompt in the new chat to get started.'
+}
+
+// Used by the empty-page starters and by "Add a client" on a populated page (D13), so the two
+// cannot drift.
 function startStarter(which) {
-  return startChatWith(which === 'add' ? ADD_PROMPT : SUGGEST_PROMPT, {
-    ready: 'New chat ready. Press Enter to send the prompt.',
-    copied: 'Copied the prompt. Paste it into the new chat and press Enter.',
-    manual: 'Type the prompt in the new chat to get started.'
-  })
+  return startChatWith(which === 'add' ? ADD_PROMPT : SUGGEST_PROMPT, PROMPT_MESSAGES)
+}
+
+function startProject(id) {
+  return startChatWith(projectPrompt(id), PROMPT_MESSAGES)
 }
 
 function Starter({ title, description }) {
@@ -411,12 +435,35 @@ function Detail({ id, hidden, blocked }) {
           jsx(Badge, { variant: 'outline', children: data.kind }),
           data.valid ? null : jsx(Badge, { variant: 'warn', children: 'needs repair' }),
           jsx('div', { className: 'flex-1' }),
-          ownerId
-            ? jsxs(Button, {
-                variant: 'default',
-                size: 'sm',
-                onClick: () => startChat(ownerId),
-                children: [jsx(Codicon, { name: 'comment-discussion' }), 'Start a chat']
+          // The two actions wrap as one unit. Loose in the row, a narrower window left "Add a
+          // project" at the right of the first line and dropped "Start a chat" to the left of
+          // the next.
+          data.kind === 'client' || ownerId
+            ? jsxs('div', {
+                className: 'flex items-center gap-2',
+                style: ACTIONS,
+                children: [
+                  // Only a client gets a project added to it; a project record has no such action (D13).
+                  data.kind === 'client'
+                    ? jsxs(Button, {
+                        variant: 'outline',
+                        size: 'sm',
+                        style: NOWRAP,
+                        onClick: () => startProject(data.id),
+                        title: 'Start a new chat with the agent to add a project for this client',
+                        children: [jsx(Codicon, { name: 'add' }), 'Add a project']
+                      })
+                    : null,
+                  ownerId
+                    ? jsxs(Button, {
+                        variant: 'default',
+                        size: 'sm',
+                        style: NOWRAP,
+                        onClick: () => startChat(ownerId),
+                        children: [jsx(Codicon, { name: 'comment-discussion' }), 'Start a chat']
+                      })
+                    : null
+                ]
               })
             : null
         ]
@@ -596,6 +643,22 @@ function ClientsPage() {
             jsx(NotListed, { records: data.unlisted, hidden }),
             // Nothing to search on an empty page: the starter block takes the column instead.
             starter ? null : jsx(SearchField, { placeholder: 'Find a client or project', value: query, onChange: setQuery }),
+            // A populated page keeps "Add a client" under the search (D13); it only drafts. It has
+            // a row of its own: the list column is too narrow for both, and beside the field the
+            // button cut the placeholder short and wrapped its own label.
+            starter
+              ? null
+              : jsx('div', {
+                  style: NOWRAP_ROW,
+                  children: jsxs(Button, {
+                    variant: 'outline',
+                    size: 'sm',
+                    style: NOWRAP,
+                    onClick: () => startStarter('add'),
+                    title: 'Start a new chat with the agent to add one client',
+                    children: [jsx(Codicon, { name: 'add' }), 'Add a client']
+                  })
+                }),
             jsx(Scroller, {
               className: 'min-h-0 flex-1',
               children: starter

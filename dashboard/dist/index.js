@@ -1,7 +1,7 @@
 // Engagements tab for the Hermes web dashboard: the same read-only Clients view as the
 // Desktop page, served by this plugin's dashboard/plugin_api.py (SPEC 6.7). Nothing here
-// writes, and it has no composer: the starter prompts on an empty page are copied for the
-// user to paste into a chat. React and the UI kit come from window.__HERMES_PLUGIN_SDK__; no build step.
+// writes, and it has no composer: the starter prompts on an empty page, "Add a client" and
+// "Add a project" are copied for the user to paste into a chat. React and the UI kit come from window.__HERMES_PLUGIN_SDK__; no build step.
 (function () {
   "use strict";
 
@@ -25,6 +25,18 @@
   const ADD_PROMPT =
     "Help me add a client to Engagements. Use the engagements:onboard-client skill. Ask me only what you need.";
   const STORY = "Find clients from chats you have already had, or add one now.";
+
+  // Inline, not classes: the host's compiled CSS may not carry them. A prompt button keeps its
+  // label on one line, and its row keeps the button at its own width instead of stretching it
+  // across the column.
+  const NOWRAP = { whiteSpace: "nowrap", flexShrink: 0 };
+  const NOWRAP_ROW = { display: "flex", justifyContent: "flex-start" };
+
+  // "Add a project" on a client record (decision D13). It carries the client's id and nothing
+  // else from the record, the same id the "Start a chat" row shows as /client <id>.
+  function projectPrompt(id) {
+    return "Help me add a project for the client " + id + " to Engagements. Use the engagements:onboard-client skill. Ask me only what you need.";
+  }
 
   function mask(text, hidden) {
     if (!hidden || !text) return text;
@@ -68,11 +80,23 @@
     return h(Badge, { variant: s === "active" ? "default" : "outline" }, s);
   }
 
+  // What a prompt button copied, shown beside the button that copied it. Under privacy mode a
+  // prompt that names a client shows the id as "…", the way the "Start a chat" row does; the
+  // clipboard still holds the full prompt.
+  function Copied(props) {
+    const copied = props.copied;
+    if (!copied) return null;
+    return h("div", { className: "flex flex-col gap-1" },
+      h("p", { className: "text-xs text-muted-foreground" },
+        copied.ok ? "Copied. Paste it into a new chat." : "Copy this prompt into a new chat."),
+      h("pre", { className: "whitespace-pre-wrap break-words font-sans text-xs" },
+        props.hidden && copied.masked ? copied.masked : copied.text));
+  }
+
   // The two starter actions on an empty page. The web dashboard has no composer, so a button
   // copies its prompt, shows the exact text, and says to paste it into a new chat. Nothing is
   // sent, and the page still issues no request beyond its GETs.
   function Starter(props) {
-    const copied = props.copied;
     return h("div", { className: "flex flex-col gap-2" },
       h("p", { className: "text-sm font-medium" }, props.title),
       h("p", { className: "text-xs text-muted-foreground" }, props.description),
@@ -81,11 +105,8 @@
           "Find clients in my past chats"),
         h(Button, { variant: "outline", size: "sm", onClick: function () { props.onCopy(ADD_PROMPT); } },
           "Add a client")),
-      copied ? h("div", { className: "flex flex-col gap-1" },
-        h("p", { className: "text-xs text-muted-foreground" },
-          copied.ok ? "Copied. Paste it into a new chat." : "Copy this prompt into a new chat."),
-        // The prompt holds no client data, so it is shown even with privacy on.
-        h("pre", { className: "whitespace-pre-wrap break-words font-sans text-xs" }, copied.text)) : null);
+      // The prompts hold no client data, so they are shown even with privacy on.
+      h(Copied, { copied: props.copied }));
   }
 
   function List(props) {
@@ -202,10 +223,19 @@
     const references = locations.filter(function (l) { return !l.local; });
     // A project with no client record cannot start a chat: there is no client to bind to.
     const ownerId = d.kind === "client" ? d.id : (d.client && d.client.known ? d.client.id : null);
+    // Only a client gets a project added to it; a project record has no such action (D13).
+    const where = "project:" + d.id;
+    const addProject = function () {
+      props.onCopy(projectPrompt(d.id), where, projectPrompt("…"));
+    };
     return h("div", { className: "flex flex-col gap-4" },
       h("div", { className: "flex flex-wrap items-center gap-2" },
         h("h2", { className: "text-lg font-semibold" }, mask(d.name, hidden)), status(d.record_status),
-        h(Badge, { variant: "outline" }, d.kind), d.valid ? null : h(Badge, { variant: "destructive" }, "needs repair")),
+        h(Badge, { variant: "outline" }, d.kind), d.valid ? null : h(Badge, { variant: "destructive" }, "needs repair"),
+        d.kind === "client" ? h("div", { className: "flex-1" }) : null,
+        d.kind === "client" ? h(Button, { variant: "outline", size: "sm", style: NOWRAP, onClick: addProject }, "Add a project") : null),
+      d.kind === "client" && props.copied && props.copied.where === where
+        ? h(Copied, { copied: props.copied, hidden: hidden }) : null,
       // Layout that the host's compiled CSS may not carry (arbitrary values) is inline, not a class.
       h("dl", { className: "grid gap-x-3 gap-y-1 text-xs text-muted-foreground", style: { gridTemplateColumns: "8rem minmax(0, 1fr)" } },
         h("dt", null, "Id"), h("dd", { className: "font-mono" }, hidden ? "(hidden)" : d.id),
@@ -250,14 +280,16 @@
     const res = useJSON(API + "/overview", tick);
     // A copy is only a copy: nothing is sent, and no request replaces the GETs above. When the
     // browser has no clipboard (an insecure origin), the prompt is still shown to copy by hand.
-    const copyPrompt = function (text) {
+    // `where` names the button, so the text appears beside the one that copied it; `masked` is
+    // what to show instead under privacy mode when the prompt names a client.
+    const copyPrompt = function (text, where, masked) {
       const clipboard = window.navigator && window.navigator.clipboard;
       const written = clipboard && clipboard.writeText
         ? clipboard.writeText(text)
         : Promise.reject(new Error("clipboard unavailable"));
       return written.then(
-        function () { setCopied({ text: text, ok: true }); },
-        function () { setCopied({ text: text, ok: false }); });
+        function () { setCopied({ text: text, ok: true, where: where || "starter", masked: masked || null }); },
+        function () { setCopied({ text: text, ok: false, where: where || "starter", masked: masked || null }); });
     };
     const togglePrivacy = function () {
       const next = !hidden;
@@ -274,13 +306,14 @@
     // A selection the latest overview no longer lists is shown as such, whatever the record
     // request in flight or already answered says.
     const blocked = d ? notListedReason(d, selected) : null;
+    const starterCopied = copied && copied.where === "starter" ? copied : null;
     let body;
     if (res.error) body = h("p", { className: "text-sm text-destructive" }, shown(res.error, hidden));
     else if (!d) body = h("p", { className: "text-sm text-muted-foreground" }, "Loading…");
     // The missing-library sentence carries the `init --root` hint; it stays as secondary text.
     else if (d.status === "missing") body = h("div", { className: "flex flex-col gap-3" },
       h("p", { className: "text-sm text-muted-foreground" }, shown(d.message, hidden)),
-      h(Starter, { title: "Start with your first client", description: STORY, copied: copied, onCopy: copyPrompt }));
+      h(Starter, { title: "Start with your first client", description: STORY, copied: starterCopied, onCopy: copyPrompt }));
     // Every other non-ok state keeps its own message: the starter would promise work that cannot be saved.
     else if (d.status !== "ok") body = h("p", { className: "text-sm text-muted-foreground" }, shown(d.message, hidden));
     // Two panes that wrap to one column on a narrow window, without relying on a breakpoint class.
@@ -290,11 +323,18 @@
         h(NotListed, { records: d.unlisted, hidden: hidden }),
         // Nothing to search on an empty page: the starter block takes the column instead.
         starter ? null : h(Input, { placeholder: "Find a client or project", value: query, onChange: function (e) { setQuery(e.target.value); } }),
+        // A populated page keeps "Add a client" under the search (D13); it only copies. It has a
+        // row of its own: the list column is too narrow for both, and beside the field the button
+        // cut the placeholder short and wrapped its own label.
+        starter ? null : h("div", { style: NOWRAP_ROW },
+          h(Button, { variant: "outline", size: "sm", style: NOWRAP, onClick: function () { copyPrompt(ADD_PROMPT, "add"); } }, "Add a client")),
+        // ADD_PROMPT holds no client data, so it is shown even with privacy on.
+        !starter && copied && copied.where === "add" ? h(Copied, { copied: copied }) : null,
         starter
-          ? h(Starter, { title: "No clients yet", description: STORY, copied: copied, onCopy: copyPrompt })
+          ? h(Starter, { title: "No clients yet", description: STORY, copied: starterCopied, onCopy: copyPrompt })
           : h(List, { data: d, hidden: hidden, query: query, selected: selected, onSelect: setSelected })),
       h("div", { style: { flex: "999 1 24rem", minWidth: 0 } },
-        h(Detail, { id: selected, hidden: hidden, tick: tick, blocked: blocked })));
+        h(Detail, { id: selected, hidden: hidden, tick: tick, blocked: blocked, copied: copied, onCopy: copyPrompt })));
     return h(Card, { "data-engagements-page": "clients" },
       h(CardHeader, null,
         h("div", { className: "flex flex-wrap items-center gap-3" },
