@@ -1,0 +1,38 @@
+{
+  "description": "No id, no path and nothing bound: unbound names the effective resolution and the live automatic resolution. TOOLS.md 'engagements_context' (Unbound details) documents this details shape.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "sections": []
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "unbound",
+      "message": "No id or path was given and no client or project is bound to this session.",
+      "details": {
+        "mode": "auto",
+        "state": "unbound",
+        "reason": "no_cwd",
+        "evidence": "auto: no working directory",
+        "candidates": [],
+        "auto": {
+          "state": "unbound",
+          "reason": "no_cwd",
+          "evidence": "auto: no working directory",
+          "candidates": []
+        }
+      }
+    },
+    "warnings": []
+  }
+}

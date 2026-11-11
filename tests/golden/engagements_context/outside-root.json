@@ -1,0 +1,28 @@
+{
+  "description": "A path escaping the library root is outside_root and the detail repeats the path as given.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "../outside.md"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "outside_root",
+      "message": "Path is outside the library root.",
+      "details": {
+        "path": "../outside.md"
+      }
+    },
+    "warnings": []
+  }
+}

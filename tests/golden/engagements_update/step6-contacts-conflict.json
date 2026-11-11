@@ -1,0 +1,58 @@
+{
+  "description": "Spec 9 step 6: an editor appended to Contacts, so replace_line on Contacts returns conflict footprint_changed with both versions and writes nothing. SPEC-QUESTION: the message is writer.py's wording; the TOOLS.md example prints an older one.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "snapshot",
+      "path": "Acme Bakery/Client.md"
+    },
+    {
+      "op": "replace",
+      "path": "Acme Bakery/Client.md",
+      "old": "## Contacts\n- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am\n",
+      "new": "## Contacts\n- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am\n- Sam Ortiz | manager, Elm St | sam@acme-bakery.example\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<fixture_rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "replace_line",
+        "section": "Contacts",
+        "match": "jane@acme-bakery.example",
+        "text": "- Jane Rivera | owner | jane@acmebakery.example"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "conflict",
+      "message": "Changed since your read: contacts. Nothing was written. Show the user both versions.",
+      "details": {
+        "reason": "footprint_changed",
+        "current_rev": "<rev:Acme Bakery/Client.md>",
+        "footprints": [
+          {
+            "op_index": 0,
+            "type": "section",
+            "key": "contacts",
+            "base_text": "## Contacts\n- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am",
+            "current_text": "## Contacts\n- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am\n- Sam Ortiz | manager, Elm St | sam@acme-bakery.example"
+          }
+        ]
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "description": "A duplicated id never selects a record: ambiguous lists both candidates ordered by name.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Duplicate/Client.md",
+      "text": "---\nengagements: client\nid: acme-bakery\nname: Acme Copy\nstatus: active\n---\n\n## Summary\nA second record claiming the same id.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "acme-bakery"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "ambiguous",
+      "message": "More than one record matches.",
+      "details": {
+        "candidates": [
+          {
+            "id": "acme-bakery",
+            "kind": "client",
+            "name": "Acme Bakery",
+            "client": null,
+            "path": "Acme Bakery/Client.md"
+          },
+          {
+            "id": "acme-bakery",
+            "kind": "client",
+            "name": "Acme Copy",
+            "client": null,
+            "path": "Duplicate/Client.md"
+          }
+        ]
+      }
+    },
+    "warnings": []
+  },
+  "state_after": null
+}

@@ -1,0 +1,37 @@
+name: engagements
+version: 1.0.0-rc1
+manifest_version: 2
+requires_hermes: ">=0.22.3"
+description: A maintained, file-based client foundation for Hermes agents. Find a client, bind a session to it, and keep its record current in plain Markdown.
+author: Hopewell MSP
+license: MIT
+python_dependencies:
+  - "pyyaml>=6,<7"
+provides_tools:
+  - engagements_find
+  - engagements_bind
+  - engagements_context
+  - engagements_create
+  - engagements_update
+provides_hooks:
+  - pre_llm_call
+  - post_compaction
+  - on_session_reset
+  - on_session_delete
+config_schema:
+  library_root:
+    type: str
+    default: ""
+    description: "Library folder. Blank uses <HERMES_HOME>/plugin-data/engagements/library. Point several profiles at one absolute path to share it."
+  labels:
+    type: dict
+    default: {client: Client, project: Project}
+    description: "Display words only (for example Account/Campaign). Keys: client, project."
+  auto_bind:
+    type: bool
+    default: true
+    description: "Bind a session automatically when its working directory is inside exactly one project's local locations (CLI, TUI and Desktop)."
+  banner:
+    type: bool
+    default: true
+    description: "Tell the model which client the session is bound to when that changes."

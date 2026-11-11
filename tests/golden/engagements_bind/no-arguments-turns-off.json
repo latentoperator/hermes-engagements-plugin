@@ -1,0 +1,34 @@
+{
+  "description": "With no arguments mode is inferred as off (T4), so a call with no ids unbinds and stores off.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": {
+      "mode": "auto"
+    }
+  },
+  "config": {},
+  "request": {},
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "off",
+      "state": "unbound",
+      "method": "off",
+      "evidence": "off",
+      "client": null,
+      "project": null,
+      "active_projects": [],
+      "candidates": []
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "off"
+  }
+}

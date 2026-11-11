@@ -1,0 +1,68 @@
+{
+  "description": "Reading a project by id returns its client object and no projects key; a project id resolves globally.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-website-2026"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-website-2026",
+      "kind": "project",
+      "path": "Acme Bakery/Projects/Website 2026.md",
+      "library_root": "<root>",
+      "rev": "<rev:Acme Bakery/Projects/Website 2026.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "project",
+        "id": "acme-website-2026",
+        "client": "acme-bakery",
+        "name": "Website 2026",
+        "status": "active",
+        "locations": [
+          "~/clients/acme/website-2026",
+          "~/clients/shared",
+          "https://git.example/studio/acme-site"
+        ],
+        "updated": "2026-11-05"
+      },
+      "sections": [
+        {
+          "title": "Purpose",
+          "text": "Replace the 2019 site; launch before spring menu.\n\n",
+          "partial": false
+        },
+        {
+          "title": "Notes",
+          "text": "- Staging site: https://staging.acme-bakery.example\n\n",
+          "partial": false
+        },
+        {
+          "title": "Change log",
+          "text": "- 2026-11-05 owner: created from onboarding conversation\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 195,
+      "client": {
+        "id": "acme-bakery",
+        "name": "Acme Bakery"
+      },
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

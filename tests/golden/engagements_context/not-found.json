@@ -1,0 +1,28 @@
+{
+  "description": "An id that matches no record is not_found with the library module's message.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "ghost-client"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "No client or project matches 'ghost-client'.",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  }
+}

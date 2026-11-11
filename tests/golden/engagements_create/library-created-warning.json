@@ -1,0 +1,44 @@
+{
+  "description": "With create_default on and no .engagements/library.yaml, the library is created and library_created is the first warning. SPEC-QUESTION: needs config.create_default, which the golden README's config list does not name.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "delete",
+      "path": ".engagements/library.yaml"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {
+    "create_default": true
+  },
+  "request": {
+    "kind": "client",
+    "name": "Copper Kettle Cafe"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "copper-kettle-cafe",
+      "kind": "client",
+      "path": "Copper Kettle Cafe/Client.md",
+      "rev": "<rev_after:Copper Kettle Cafe/Client.md>",
+      "similar_overridden": []
+    },
+    "warnings": [
+      {
+        "code": "library_created",
+        "message": "Created a new library at the default location."
+      }
+    ]
+  },
+  "files_after": {
+    "Copper Kettle Cafe/Client.md": "---\nengagements: client\nid: copper-kettle-cafe\nname: Copper Kettle Cafe\naliases: []\nstatus: active\nupdated: 2026-11-07\n---\n\n# Copper Kettle Cafe\n\n## Summary\n\n## Current work\n\n## Contacts\n\n## Communication preferences\n\n## Locations\n\n## Systems of record\n\n## History\n\n## Unconfirmed\n\n## Change log\n- 2026-11-07 studio-dev: created client (source: conversation)\n"
+  }
+}

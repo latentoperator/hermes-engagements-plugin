@@ -1,0 +1,7 @@
+# Everything is checked out with LF on every platform. Records, golden cases and expected
+# output are compared byte for byte, and Windows would otherwise convert them to CRLF.
+* text=auto eol=lf
+
+# Parser fixtures are byte-sensitive, including intentionally mixed line endings. This line
+# stays below the rule above: the last matching pattern wins.
+tests/fixtures/records/*.md -text

@@ -1,0 +1,38 @@
+{
+  "description": "append_to_section requires non-blank text: empty_text.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "append_to_section",
+        "section": "Summary",
+        "text": "   "
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid operation.",
+      "details": {
+        "op_index": 0,
+        "field": "text",
+        "reason": "empty_text"
+      }
+    },
+    "warnings": []
+  }
+}

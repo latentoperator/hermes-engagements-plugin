@@ -1,0 +1,22 @@
+# Who touches the real state.db-shm, and when (receipts gathered during the run on the test desktop, 2026-11-06, times -0600)
+state.db-shm mtimes seen in the snapshots and probes:
+  22:52:23.19  (before-snapshot taken 22:56:28; the build had not started, no scratch process existed)
+  22:57:23.08  (build running, no Desktop yet)
+  23:02:22.65  (before any Desktop launch)
+  23:07:22.10  (Desktop running)
+  23:12:21.59  (after-snapshot taken 23:13:03; the Desktop, gateway and stub had all been stopped at about 23:09)
+The tick is every five minutes, on :x2:22, and ~/.local/state/<desktop-shell>/agents/usage/hermes.json moves in the same second
+(22:57:22.65 against the 22:57:23.08 shm touch; 23:12:21.80 against 23:12:21.59). The desktop shell's agents collector (/usr/share/<desktop-shell>/shell/plugins/agents/collectors.py) opens
+state.db read-only (sqlite3.connect(... '?mode=ro')), which touches the -shm index file without changing state.db.
+So the shm movement predates the spike and continued after it; it does not correlate with the spike.
+
+fuser on the real state.db and state.db-shm was empty at every probe (the snapshots and probes summarized in its README.md), and a
+39-sample scan of every <user> process's fds at 23:12:05-23:12:45 (poll-after-teardown output below), straddling the
+23:12:21 tick, caught no holder. The collector's open is shorter than the ~1 s a full /proc scan takes, so the holder
+at the tick was NOT captured. The expected holder (hermes_bridge.py, pid 1270) was running throughout but held no fd on
+state.db at any sample. State plainly: I attribute the shm movement to the collector from the cadence and the code, not
+from catching its fd.
+
+--- poll-after-teardown output (blank 'holders seen' line = none):
+samples=39
+holders seen: (none)

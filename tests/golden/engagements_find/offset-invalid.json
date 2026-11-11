@@ -1,0 +1,30 @@
+{
+  "description": "A negative offset fails schema validation before the library is opened: invalid_op with field offset and reason invalid_value.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "",
+    "offset": -1
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "offset",
+        "reason": "invalid_value"
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "description": "A name over 200 characters is rejected by the argument schema.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books Ridgeway Books "
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "name",
+        "reason": "invalid_value"
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "description": "replace_section swaps the whole Notes span, keeping the blank separator before the next heading.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-website-2026",
+    "base_rev": "<rev:Acme Bakery/Projects/Website 2026.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "replace_section",
+        "section": "Notes",
+        "body": "- Staging site: https://staging2.acme-bakery.example\n- Launch checklist in review"
+      }
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-website-2026",
+      "path": "Acme Bakery/Projects/Website 2026.md",
+      "new_rev": "<rev_after:Acme Bakery/Projects/Website 2026.md>",
+      "rebased": false,
+      "applied": 1,
+      "change_log_line": "- 2026-11-07 studio-dev: replace section Notes (source: owner email 2026-11-07)"
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Acme Bakery/Projects/Website 2026.md": "---\nengagements: project\nid: acme-website-2026\nclient: acme-bakery\nname: Website 2026\nstatus: active\nlocations:\n  - ~/clients/acme/website-2026\n  - ~/clients/shared\n  - https://git.example/studio/acme-site\nupdated: 2026-11-07\n---\n\n## Purpose\nReplace the 2019 site; launch before spring menu.\n\n## Notes\n- Staging site: https://staging2.acme-bakery.example\n- Launch checklist in review\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n- 2026-11-07 studio-dev: replace section Notes (source: owner email 2026-11-07)\n"
+  }
+}

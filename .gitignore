@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+dist/
+# The web dashboard tab ships prebuilt; Hermes loads it straight from the package (SPEC 6.7).
+!dashboard/dist/
+build/
+.coverage
+htmlcov/
+# local scratch: spike homes, test libraries
+.scratch/
+.engagements/
+# Fixture libraries are committed test data. A checkout without
+# their .engagements/library.yaml fails with library_missing.
+!tests/fixtures/library/.engagements/
+!tests/fixtures/studio/.engagements/

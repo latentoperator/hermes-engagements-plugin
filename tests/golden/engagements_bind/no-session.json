@@ -1,0 +1,26 @@
+{
+  "description": "Without a session id the call cannot store a binding: no_session with the handler's own message, checked before the library is opened.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": null,
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "acme-bakery"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "no_session",
+      "message": "This call has no session id, so there is nothing to bind to.",
+      "details": {}
+    },
+    "warnings": []
+  }
+}

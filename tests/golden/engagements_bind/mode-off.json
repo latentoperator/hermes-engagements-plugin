@@ -1,0 +1,39 @@
+{
+  "description": "mode off unbinds: unbound with method off and the evidence 'off', and the stored value becomes off.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": {
+      "mode": "explicit",
+      "client": "acme-bakery",
+      "project": null,
+      "at": "2026-11-07T14:02:00-06:00"
+    }
+  },
+  "config": {},
+  "request": {
+    "mode": "off"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "off",
+      "state": "unbound",
+      "method": "off",
+      "evidence": "off",
+      "client": null,
+      "project": null,
+      "active_projects": [],
+      "candidates": []
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "off"
+  }
+}

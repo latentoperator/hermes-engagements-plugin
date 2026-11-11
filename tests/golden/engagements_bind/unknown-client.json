@@ -1,0 +1,29 @@
+{
+  "description": "An unknown client reference is not_found with the library module's message and reason no_match. SPEC-QUESTION: TOOLS.md does not say whether bind adds a field to these details.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "ghost-client"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "No client or project matches 'ghost-client'.",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  },
+  "state_after": null
+}

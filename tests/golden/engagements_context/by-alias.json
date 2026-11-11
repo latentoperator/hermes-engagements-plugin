@@ -1,0 +1,109 @@
+{
+  "description": "An exact alias resolves to the client, whose projects list is ordered by normalized name.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "Riverbend"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "riverbend-dental",
+      "kind": "client",
+      "path": "Riverbend Dental/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Riverbend Dental/Client.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "client",
+        "id": "riverbend-dental",
+        "name": "Riverbend Dental",
+        "aliases": [
+          "Riverbend"
+        ],
+        "status": "active",
+        "updated": "2026-11-05"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Two-chair family practice. Office manager approves all marketing.\n\n",
+          "partial": false
+        },
+        {
+          "title": "Current work",
+          "text": "- Recall campaign (see project `riverbend-recall-campaign`)\n\n",
+          "partial": false
+        },
+        {
+          "title": "Contacts",
+          "text": "- Priya Nair | office manager | priya@riverbend-dental.example | prefers phone before noon\n\n",
+          "partial": false
+        },
+        {
+          "title": "Communication preferences",
+          "text": "- Monthly check-in call, first Tuesday\n\n",
+          "partial": false
+        },
+        {
+          "title": "Locations",
+          "text": "- Shared docs: ~/clients/riverbend/docs\n\n",
+          "partial": false
+        },
+        {
+          "title": "Systems of record",
+          "text": "- Practice software: reference only, no exports\n\n",
+          "partial": false
+        },
+        {
+          "title": "History",
+          "text": "\n",
+          "partial": false
+        },
+        {
+          "title": "Unconfirmed",
+          "text": "\n",
+          "partial": false
+        },
+        {
+          "title": "Change log",
+          "text": "- 2026-11-05 owner: created from onboarding conversation\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 551,
+      "projects": [
+        {
+          "id": "riverbend-brand-assets",
+          "name": "Brand Assets",
+          "status": "active",
+          "locations": [
+            "~/clients/shared"
+          ]
+        },
+        {
+          "id": "riverbend-recall-campaign",
+          "name": "Recall Campaign",
+          "status": "active",
+          "locations": [
+            "~/clients/riverbend/recall"
+          ]
+        }
+      ],
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

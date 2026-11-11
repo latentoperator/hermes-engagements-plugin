@@ -1,0 +1,41 @@
+{
+  "description": "An exact id match (tier 3) returns one row; the id field is reported because it is considered before name and alias on a tie.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "riverbend-dental"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "riverbend-dental",
+          "kind": "client",
+          "name": "Riverbend Dental",
+          "status": "active",
+          "client": null,
+          "path": "Riverbend Dental/Client.md",
+          "valid": true,
+          "match": {
+            "field": "id",
+            "value": "riverbend-dental"
+          }
+        }
+      ],
+      "total": 1,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

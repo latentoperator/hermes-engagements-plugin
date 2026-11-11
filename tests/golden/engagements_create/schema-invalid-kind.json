@@ -1,0 +1,29 @@
+{
+  "description": "kind outside the enum is rejected by the argument schema.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "vendor",
+    "name": "Ridgeway Books"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "kind",
+        "reason": "invalid_value"
+      }
+    },
+    "warnings": []
+  }
+}

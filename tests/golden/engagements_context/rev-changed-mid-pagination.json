@@ -1,0 +1,39 @@
+{
+  "description": "A stale rev on a page request is conflict/rev_changed; the current rev is reported and nothing is returned. The record is lengthened past one page by setup, so offset 12000 is in range.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "append",
+      "path": "Acme Bakery/Projects/Website 2026.md",
+      "text": "0123456789012345678901234567890123456789\n",
+      "repeat": 400
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-website-2026",
+    "offset": 12000,
+    "rev": "<fixture_rev:Acme Bakery/Projects/Website 2026.md>"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "conflict",
+      "message": "The record changed since your last read. Nothing was returned. Read it again from offset 0.",
+      "details": {
+        "reason": "rev_changed",
+        "current_rev": "<rev:Acme Bakery/Projects/Website 2026.md>",
+        "footprints": []
+      }
+    },
+    "warnings": []
+  }
+}

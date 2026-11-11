@@ -1,0 +1,30 @@
+{
+  "description": "A project name is resolved only among the given client's projects, so another client's project name is not_found rather than a mismatch. SPEC-QUESTION: TOOLS.md does not print this error; the library's not_found message is the conservative reading.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "riverbend-dental",
+    "project": "Website 2026"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "No client or project matches 'Website 2026'.",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  },
+  "state_after": null
+}

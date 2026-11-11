@@ -1,0 +1,63 @@
+{
+  "description": "Unsupported YAML on a property is a targeted defect: the property value is the typed placeholder and the record is invalid.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Odd Aliases/Client.md",
+      "text": "---\nengagements: client\nid: odd-aliases\nname: Odd Aliases\naliases: {a: b}\nstatus: active\n---\n\n## Summary\nA nested mapping where a list belongs.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Odd Aliases/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "odd-aliases",
+      "kind": "client",
+      "path": "Odd Aliases/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Odd Aliases/Client.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "client",
+        "id": "odd-aliases",
+        "name": "Odd Aliases",
+        "aliases": {
+          "unsupported_yaml": "dict"
+        },
+        "status": "active"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "A nested mapping where a list belongs.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 50,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Odd Aliases/Client.md"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "description": "A project for a client id that does not exist is not_found and nothing is written.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "project",
+    "name": "Holiday Postcards 2026",
+    "client": "northwind-traders"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "No client with id 'northwind-traders'.",
+      "details": {
+        "reason": "no_match",
+        "field": "client"
+      }
+    },
+    "warnings": []
+  }
+}

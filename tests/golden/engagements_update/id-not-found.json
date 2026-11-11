@@ -1,0 +1,36 @@
+{
+  "description": "An id that matches no record is not_found with reason no_match.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "northwind-traders",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "append_to_section",
+        "section": "Summary",
+        "text": "- note"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "<message>",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  }
+}

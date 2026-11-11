@@ -1,0 +1,70 @@
+{
+  "description": "The kind filter drops clients and keeps every project, inactive ones included.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "",
+    "kind": "project",
+    "include_inactive": true
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "riverbend-brand-assets",
+          "kind": "project",
+          "name": "Brand Assets",
+          "status": "active",
+          "client": "riverbend-dental",
+          "path": "Riverbend Dental/Projects/Brand Assets.md",
+          "valid": true,
+          "match": null
+        },
+        {
+          "id": "riverbend-recall-campaign",
+          "kind": "project",
+          "name": "Recall Campaign",
+          "status": "active",
+          "client": "riverbend-dental",
+          "path": "Riverbend Dental/Projects/Recall Campaign.md",
+          "valid": true,
+          "match": null
+        },
+        {
+          "id": "maple-spring-window-2025",
+          "kind": "project",
+          "name": "Spring Window 2025",
+          "status": "historical",
+          "client": "maple-street-florist",
+          "path": "Maple Street Florist/Projects/Spring Window 2025.md",
+          "valid": true,
+          "match": null
+        },
+        {
+          "id": "acme-website-2026",
+          "kind": "project",
+          "name": "Website 2026",
+          "status": "active",
+          "client": "acme-bakery",
+          "path": "Acme Bakery/Projects/Website 2026.md",
+          "valid": true,
+          "match": null
+        }
+      ],
+      "total": 4,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

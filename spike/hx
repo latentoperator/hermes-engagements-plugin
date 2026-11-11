@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Run hermes inside the isolated Phase 0 spike home with a scrubbed environment.
+# No inherited HERMES_*, provider keys, tokens or session identity reach the child.
+# P2_TMP (optional) becomes TMPDIR: `plugins doctor` stages a copy of the plugin under TMPDIR and refuses
+# to run when that is inside the plugin, so point it outside the repo when the scratch home is under .scratch/.
+set -euo pipefail
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SPIKE="${SPIKE:-$REPO/.scratch/spike}"
+HERMES_BIN="${HERMES_BIN:-$(command -v hermes)}"
+exec env -i \
+  HOME="$SPIKE/home" \
+  HERMES_HOME="$SPIKE/home/.hermes" \
+  PATH="$(dirname "$HERMES_BIN"):/usr/local/bin:/usr/bin:/bin" \
+  TMPDIR="${P2_TMP:-/tmp}" LANG="${LANG:-C.UTF-8}" TERM="${TERM:-xterm-256color}" \
+  "$HERMES_BIN" "$@"

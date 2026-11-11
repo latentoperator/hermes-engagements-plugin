@@ -1,0 +1,67 @@
+{
+  "description": "An exact alias match (casefolded) wins over the name prefix and reports field 'alias' with the value as stored. The exact alias (tier 3) outranks the two projects whose ids start with 'riverbend-' (tier 2, ordered by normalized name).",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "Riverbend"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "riverbend-dental",
+          "kind": "client",
+          "name": "Riverbend Dental",
+          "status": "active",
+          "client": null,
+          "path": "Riverbend Dental/Client.md",
+          "valid": true,
+          "match": {
+            "field": "alias",
+            "value": "Riverbend"
+          }
+        },
+        {
+          "id": "riverbend-brand-assets",
+          "kind": "project",
+          "name": "Brand Assets",
+          "status": "active",
+          "client": "riverbend-dental",
+          "path": "Riverbend Dental/Projects/Brand Assets.md",
+          "valid": true,
+          "match": {
+            "field": "id",
+            "value": "riverbend-brand-assets"
+          }
+        },
+        {
+          "id": "riverbend-recall-campaign",
+          "kind": "project",
+          "name": "Recall Campaign",
+          "status": "active",
+          "client": "riverbend-dental",
+          "path": "Riverbend Dental/Projects/Recall Campaign.md",
+          "valid": true,
+          "match": {
+            "field": "id",
+            "value": "riverbend-recall-campaign"
+          }
+        }
+      ],
+      "total": 3,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

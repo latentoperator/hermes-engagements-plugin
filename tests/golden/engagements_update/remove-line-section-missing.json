@@ -1,0 +1,38 @@
+{
+  "description": "remove_line cannot create a section: section_missing.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "remove_line",
+        "section": "Renewals",
+        "match": "anything"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid operation.",
+      "details": {
+        "op_index": 0,
+        "field": "section",
+        "reason": "section_missing"
+      }
+    },
+    "warnings": []
+  }
+}

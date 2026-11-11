@@ -1,0 +1,46 @@
+{
+  "description": "C5: a project whose only global defect is unknown_client accepts set_property client naming a valid client.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Arcade Print Shop/Projects/Window 2026.md",
+      "text": "---\nengagements: project\nid: arcade-window-2026\nclient: cinder-cone-pizza\nname: Window 2026\nstatus: active\nlocations: [~/clients/arcade/window]\nupdated: 2026-11-05\n---\n\n## Purpose\nAutumn window display for the new shopfront.\n\n## Notes\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "arcade-window-2026",
+    "base_rev": "<rev:Arcade Print Shop/Projects/Window 2026.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "client",
+        "value": "acme-bakery"
+      }
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "arcade-window-2026",
+      "path": "Arcade Print Shop/Projects/Window 2026.md",
+      "new_rev": "<rev_after:Arcade Print Shop/Projects/Window 2026.md>",
+      "rebased": false,
+      "applied": 1,
+      "change_log_line": "- 2026-11-07 studio-dev: set client (source: owner email 2026-11-07)"
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Arcade Print Shop/Projects/Window 2026.md": "---\nengagements: project\nid: arcade-window-2026\nclient: acme-bakery\nname: Window 2026\nstatus: active\nlocations: [~/clients/arcade/window]\nupdated: 2026-11-07\n---\n\n## Purpose\nAutumn window display for the new shopfront.\n\n## Notes\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n- 2026-11-07 studio-dev: set client (source: owner email 2026-11-07)\n"
+  }
+}

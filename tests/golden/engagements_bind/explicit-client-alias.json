@@ -1,0 +1,71 @@
+{
+  "description": "An exact alias binds the client; active_projects lists that client's active projects by normalized name.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "Riverbend"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "explicit",
+      "state": "bound",
+      "method": "explicit",
+      "evidence": "explicit 14:02",
+      "client": {
+        "id": "riverbend-dental",
+        "name": "Riverbend Dental",
+        "status": "active",
+        "rev": "<rev:Riverbend Dental/Client.md>",
+        "path": "Riverbend Dental/Client.md",
+        "sections": [
+          {
+            "title": "Summary",
+            "text": "Two-chair family practice. Office manager approves all marketing.",
+            "partial": false
+          },
+          {
+            "title": "Contacts",
+            "text": "- Priya Nair | office manager | priya@riverbend-dental.example | prefers phone before noon",
+            "partial": false
+          },
+          {
+            "title": "Locations",
+            "text": "- Shared docs: ~/clients/riverbend/docs",
+            "partial": false
+          }
+        ]
+      },
+      "project": null,
+      "active_projects": [
+        {
+          "id": "riverbend-brand-assets",
+          "name": "Brand Assets",
+          "status": "active"
+        },
+        {
+          "id": "riverbend-recall-campaign",
+          "name": "Recall Campaign",
+          "status": "active"
+        }
+      ],
+      "candidates": []
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "explicit",
+    "client": "riverbend-dental",
+    "project": null,
+    "at": "2026-11-07T14:02:00-06:00"
+  }
+}

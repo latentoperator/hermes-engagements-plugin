@@ -1,0 +1,47 @@
+{
+  "description": "A record with a readable kind, id and name is listed with valid false rather than skipped, and find emits no record_invalid warning.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Broken/Client.md",
+      "text": "---\nengagements: client\nid: broken-client\nname: Broken Client\nstatus: active\n---\n\n## Summary\nFirst summary.\n\n## Summary\nSecond summary.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "broken"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "broken-client",
+          "kind": "client",
+          "name": "Broken Client",
+          "status": "active",
+          "client": null,
+          "path": "Broken/Client.md",
+          "valid": false,
+          "match": {
+            "field": "id",
+            "value": "broken-client"
+          }
+        }
+      ],
+      "total": 1,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "description": "A dot-directory path inside the root is excluded, not read: not_found with reason excluded.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": ".hidden/Client.md"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "Path is excluded from the library.",
+      "details": {
+        "reason": "excluded"
+      }
+    },
+    "warnings": []
+  }
+}

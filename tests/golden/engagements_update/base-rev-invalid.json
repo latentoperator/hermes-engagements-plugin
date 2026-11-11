@@ -1,0 +1,37 @@
+{
+  "description": "A base_rev that is not 16 lowercase hex characters fails the argument schema.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "0123456789abcde",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "status",
+        "value": "paused"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "base_rev",
+        "reason": "invalid_value"
+      }
+    },
+    "warnings": []
+  }
+}

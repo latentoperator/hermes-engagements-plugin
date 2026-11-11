@@ -1,0 +1,32 @@
+{
+  "description": "An unknown top-level field is rejected by the argument schema.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books",
+    "propertes": {
+      "status": "active"
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "propertes",
+        "reason": "unexpected_field"
+      }
+    },
+    "warnings": []
+  }
+}

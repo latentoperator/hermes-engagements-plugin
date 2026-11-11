@@ -1,0 +1,54 @@
+{
+  "description": "A folder shared by two active projects is ambiguous: a successful result with state ambiguous, nothing bound and both candidates.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "mkdir",
+      "path": "<home>/clients/shared"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": "<home>/clients/shared",
+    "surface": "cli",
+    "binding": {
+      "mode": "auto"
+    }
+  },
+  "config": {},
+  "request": {
+    "mode": "auto"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "auto",
+      "state": "ambiguous",
+      "method": "auto",
+      "evidence": "auto: cwd ~/clients/shared matches projects acme-website-2026, riverbend-brand-assets",
+      "client": null,
+      "project": null,
+      "active_projects": [],
+      "candidates": [
+        {
+          "id": "acme-website-2026",
+          "kind": "project",
+          "name": "Website 2026",
+          "client": "acme-bakery"
+        },
+        {
+          "id": "riverbend-brand-assets",
+          "kind": "project",
+          "name": "Brand Assets",
+          "client": "riverbend-dental"
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "auto"
+  }
+}

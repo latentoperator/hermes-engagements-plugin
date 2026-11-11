@@ -1,0 +1,66 @@
+{
+  "description": "A path relative to the library root reads the same record a relative result path names.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Riverbend Dental/Projects/Recall Campaign.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "riverbend-recall-campaign",
+      "kind": "project",
+      "path": "Riverbend Dental/Projects/Recall Campaign.md",
+      "library_root": "<root>",
+      "rev": "<rev:Riverbend Dental/Projects/Recall Campaign.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "project",
+        "id": "riverbend-recall-campaign",
+        "client": "riverbend-dental",
+        "name": "Recall Campaign",
+        "status": "active",
+        "locations": [
+          "~/clients/riverbend/recall"
+        ],
+        "updated": "2026-11-05"
+      },
+      "sections": [
+        {
+          "title": "Purpose",
+          "text": "Bring lapsed patients back for a cleaning.\n\n",
+          "partial": false
+        },
+        {
+          "title": "Notes",
+          "text": "\n",
+          "partial": false
+        },
+        {
+          "title": "Change log",
+          "text": "- 2026-11-05 owner: created from onboarding conversation\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 136,
+      "client": {
+        "id": "riverbend-dental",
+        "name": "Riverbend Dental"
+      },
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

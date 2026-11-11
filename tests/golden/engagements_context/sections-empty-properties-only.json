@@ -1,0 +1,58 @@
+{
+  "description": "An empty sections list returns properties only: no sections, an empty view and next_offset null.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-bakery",
+    "sections": []
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-bakery",
+      "kind": "client",
+      "path": "Acme Bakery/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Acme Bakery/Client.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "client",
+        "id": "acme-bakery",
+        "name": "Acme Bakery",
+        "aliases": [
+          "Acme"
+        ],
+        "status": "active",
+        "updated": "2026-11-05"
+      },
+      "sections": [],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 0,
+      "projects": [
+        {
+          "id": "acme-website-2026",
+          "name": "Website 2026",
+          "status": "active",
+          "locations": [
+            "~/clients/acme/website-2026",
+            "~/clients/shared",
+            "https://git.example/studio/acme-site"
+          ]
+        }
+      ],
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

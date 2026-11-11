@@ -1,0 +1,30 @@
+{
+  "description": "mode off with a client is invalid_op; the field names the argument that was refused.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "mode": "off",
+    "client": "acme-bakery"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "client",
+        "reason": "mode_forbids_target"
+      }
+    },
+    "warnings": []
+  }
+}

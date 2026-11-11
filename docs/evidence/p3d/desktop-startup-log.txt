@@ -1,0 +1,28 @@
+2026-11-06 23:05:04,057 [hermes] [deeplink] registered hermes:// handler
+2026-11-06 23:05:04,135 [hermes] [boot] Resolving Hermes backend
+2026-11-06 23:05:04,268 [hermes] [env] merged login-shell PATH into process.env for backend spawn
+2026-11-06 23:05:04,336 [hermes] [updates] no update marker: script helper says absent
+2026-11-06 23:05:04,338 [hermes] [boot] Resolving Hermes runtime
+2026-11-06 23:05:04,339 [hermes] [backend] using Hermes source at /home/<user>/.cache/<scratch>-eng/src
+2026-11-06 23:05:04,339 [hermes] [boot] Using Hermes source at /home/<user>/.cache/<scratch>-eng/src
+2026-11-06 23:05:10,404 [hermes] [backend] Hermes gateway is ready
+2026-11-06 23:05:10,404 [hermes] [boot] Hermes gateway is ready
+2026-11-06 23:05:10,411 [hermes] [gateway-route win=main] published connection=local
+2026-11-06 23:05:11,526 [hermes] [gateway-route win=main] conn:local::default via=primary primary=local/default
+2026-11-06 23:05:11,559 [hermes] [gateway-route win=main] active key=default via=primary conn=local profile=default
+2026-11-06 23:05:13,787 [hermes] [bot-roster win=main] snapshot active=local answered=d8d4cc86 expected=d8d4cc86 rows=[local/default=""]
+2026-11-06 23:07:41,796 [hermes] [deeplink] registered hermes:// handler
+2026-11-06 23:07:41,855 [hermes] [boot] Resolving Hermes backend
+2026-11-06 23:07:41,883 [hermes] [env] merged login-shell PATH into process.env for backend spawn
+
+-- second launch (the run the receipts come from)
+2026-11-06 23:07:41,958 [hermes] [updates] no update marker: script helper says absent
+2026-11-06 23:07:41,959 [hermes] [boot] Resolving Hermes runtime
+2026-11-06 23:07:41,961 [hermes] [backend] using Hermes source at /home/<user>/.cache/<scratch>-eng/src
+2026-11-06 23:07:41,961 [hermes] [boot] Using Hermes source at /home/<user>/.cache/<scratch>-eng/src
+2026-11-06 23:07:45,235 [hermes] [backend] Hermes gateway is ready
+2026-11-06 23:07:45,235 [hermes] [boot] Hermes gateway is ready
+2026-11-06 23:07:45,241 [hermes] [gateway-route win=main] published connection=local
+2026-11-06 23:07:46,152 [hermes] [gateway-route win=main] conn:local::default via=primary primary=local/default
+2026-11-06 23:07:46,183 [hermes] [gateway-route win=main] active key=default via=primary conn=local profile=default
+2026-11-06 23:07:47,226 [hermes] [bot-roster win=main] snapshot active=local answered=d8d4cc86 expected=d8d4cc86 rows=[local/default=""]

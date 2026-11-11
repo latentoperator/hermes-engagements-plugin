@@ -1,0 +1,38 @@
+{
+  "description": "set_property on the plugin-owned updated property is refused as plugin_owned. SPEC-QUESTION: the message is a wildcard because the contract does not say whether tools.py or records.py words a stage 1 reserved-name error.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "updated",
+        "value": "2026-11-08"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid operation.",
+      "details": {
+        "op_index": 0,
+        "field": "key",
+        "reason": "plugin_owned"
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "description": "TOOLS.md similar_exists example: a normalized name match on an existing client blocks the create and lists the candidate.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "ACME bakery"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "similar_exists",
+      "message": "A client named like 'ACME bakery' already exists. Use it, or pass allow_similar to create another.",
+      "details": {
+        "candidates": [
+          {
+            "id": "acme-bakery",
+            "kind": "client",
+            "name": "Acme Bakery",
+            "client": null,
+            "path": "Acme Bakery/Client.md"
+          }
+        ]
+      }
+    },
+    "warnings": []
+  }
+}

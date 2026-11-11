@@ -1,0 +1,35 @@
+{
+  "description": "A body containing a level-2 heading line is refused with heading_in_text.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books",
+    "sections": [
+      {
+        "section": "Summary",
+        "body": "A bookshop.\n## Injected"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "sections[0].body",
+        "reason": "heading_in_text"
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "description": "A cwd inside no project location is unbound with the cwd in the evidence; the response is ok and the stored value stays auto.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "mkdir",
+      "path": "<home>/elsewhere"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": "<home>/elsewhere",
+    "surface": "cli",
+    "binding": {
+      "mode": "auto"
+    }
+  },
+  "config": {},
+  "request": {
+    "mode": "auto"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "auto",
+      "state": "unbound",
+      "method": "auto",
+      "evidence": "auto: no project location contains cwd ~/elsewhere",
+      "client": null,
+      "project": null,
+      "active_projects": [],
+      "candidates": []
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "auto"
+  }
+}

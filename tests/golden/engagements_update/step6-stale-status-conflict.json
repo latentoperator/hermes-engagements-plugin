@@ -1,0 +1,57 @@
+{
+  "description": "Spec 9 step 6: an editor changed status, so a stale set_property status is conflict footprint_changed with the property footprints.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "snapshot",
+      "path": "Acme Bakery/Client.md"
+    },
+    {
+      "op": "replace",
+      "path": "Acme Bakery/Client.md",
+      "old": "status: active\n",
+      "new": "status: paused\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<fixture_rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "status",
+        "value": "former"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "conflict",
+      "message": "Changed since your read: status. Nothing was written. Show the user both versions.",
+      "details": {
+        "reason": "footprint_changed",
+        "current_rev": "<rev:Acme Bakery/Client.md>",
+        "footprints": [
+          {
+            "op_index": 0,
+            "type": "property",
+            "key": "status",
+            "base_text": "status: active\n",
+            "current_text": "status: paused\n"
+          }
+        ]
+      }
+    },
+    "warnings": []
+  }
+}

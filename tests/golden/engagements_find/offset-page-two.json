@@ -1,0 +1,51 @@
+{
+  "description": "offset 2 of the same ordered matches returns the third and fourth rows, so pages of limit 2 walk the whole list without overlap; total still counts every match and next_offset names the following page.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "",
+    "include_inactive": true,
+    "limit": 2,
+    "offset": 2
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "riverbend-dental",
+          "kind": "client",
+          "name": "Riverbend Dental",
+          "status": "active",
+          "client": null,
+          "path": "Riverbend Dental/Client.md",
+          "valid": true,
+          "match": null
+        },
+        {
+          "id": "riverbend-brand-assets",
+          "kind": "project",
+          "name": "Brand Assets",
+          "status": "active",
+          "client": "riverbend-dental",
+          "path": "Riverbend Dental/Projects/Brand Assets.md",
+          "valid": true,
+          "match": null
+        }
+      ],
+      "total": 7,
+      "truncated": true,
+      "next_offset": 4
+    },
+    "warnings": []
+  }
+}

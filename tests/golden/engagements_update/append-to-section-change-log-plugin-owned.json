@@ -1,0 +1,38 @@
+{
+  "description": "A section key normalizing to change log is plugin-owned on update too. SPEC-QUESTION: the message is a wildcard because the contract does not say whether tools.py or records.py words a stage 1 reserved-name error.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "append_to_section",
+        "section": "Change Log",
+        "text": "- 2026-11-07 studio-dev: hand written"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid operation.",
+      "details": {
+        "op_index": 0,
+        "field": "section",
+        "reason": "plugin_owned"
+      }
+    },
+    "warnings": []
+  }
+}

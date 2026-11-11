@@ -1,0 +1,54 @@
+{
+  "description": "An encoding defect reads with properties null, no sections and the raw bytes decoded with replacement characters; one record_invalid and one encoding_invalid warning. SPEC-QUESTION: record_invalid carries a path, per the tool contract. TOOLS.md 'Malformed records' paginates raw_text and measures view_length on that raw view.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Broken Encoding/Client.md",
+      "hex": "2d2d2d0a656e676167656d656e74733a20636c69656e740a69643a2062726f6b656e2d656e636f64696e670a6e616d653a2042726f6b656e20456e636f64696e670a7374617475733a206163746976650a2d2d2d0a0a23232053756d6d6172790a436166e9206e6f7465732e0a"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Broken Encoding/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": null,
+      "kind": "client",
+      "path": "Broken Encoding/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Broken Encoding/Client.md>",
+      "valid": false,
+      "properties": null,
+      "sections": [],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 109,
+      "projects": [],
+      "raw_text": "---\nengagements: client\nid: broken-encoding\nname: Broken Encoding\nstatus: active\n---\n\n## Summary\nCaf� notes.\n"
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Broken Encoding/Client.md"
+      },
+      {
+        "code": "encoding_invalid",
+        "message": "<message>",
+        "path": "Broken Encoding/Client.md"
+      }
+    ]
+  }
+}

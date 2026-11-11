@@ -1,0 +1,41 @@
+{
+  "description": "replace_line rewrites exactly the one matched body line and keeps its EOL.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "replace_line",
+        "section": "Contacts",
+        "match": "jane@acme-bakery.example",
+        "text": "- Jane Rivera | owner | jane@acmebakery.example"
+      }
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-bakery",
+      "path": "Acme Bakery/Client.md",
+      "new_rev": "<rev_after:Acme Bakery/Client.md>",
+      "rebased": false,
+      "applied": 1,
+      "change_log_line": "- 2026-11-07 studio-dev: replace line in Contacts (source: owner email 2026-11-07)"
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Acme Bakery/Client.md": "---\nengagements: client\nid: acme-bakery\nname: Acme Bakery\naliases: [Acme]\nstatus: active\nupdated: 2026-11-07\n---\n\n# Acme Bakery\n\n## Summary\nThree-location bakery. Owner-run; values speed over polish.\n\n## Current work\n- Website refresh (see project `acme-website-2026`)\n\n## Contacts\n- Jane Rivera | owner | jane@acmebakery.example\n\n## Communication preferences\n- Weekly status by email on Fridays\n\n## Locations\n- Shared docs: ~/clients/acme/docs\n- Brand assets: https://drive.example/acme-brand\n\n## Systems of record\n- Invoicing: accounting customer \"Acme Bakery\" (reference only)\n- Credentials: password manager collection \"Acme\" (never copy values here)\n\n## History\n\n## Unconfirmed\n- Prefers Friday updates (source: kickoff notes 2026-11-05, assumed)\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n- 2026-11-07 studio-dev: replace line in Contacts (source: owner email 2026-11-07)\n"
+  }
+}

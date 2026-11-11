@@ -1,0 +1,40 @@
+{
+  "description": "An identical name with allow_similar takes the -2 id suffix and the ' (2)' filename suffix.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Acme Bakery",
+    "allow_similar": true
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-bakery-2",
+      "kind": "client",
+      "path": "Acme Bakery (2)/Client.md",
+      "rev": "<rev_after:Acme Bakery (2)/Client.md>",
+      "similar_overridden": [
+        {
+          "id": "acme-bakery",
+          "kind": "client",
+          "name": "Acme Bakery",
+          "client": null,
+          "path": "Acme Bakery/Client.md"
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Acme Bakery (2)/Client.md": "---\nengagements: client\nid: acme-bakery-2\nname: Acme Bakery\naliases: []\nstatus: active\nupdated: 2026-11-07\n---\n\n# Acme Bakery\n\n## Summary\n\n## Current work\n\n## Contacts\n\n## Communication preferences\n\n## Locations\n\n## Systems of record\n\n## History\n\n## Unconfirmed\n\n## Change log\n- 2026-11-07 studio-dev: created client (source: conversation)\n"
+  }
+}

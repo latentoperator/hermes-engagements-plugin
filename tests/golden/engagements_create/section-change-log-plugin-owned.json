@@ -1,0 +1,35 @@
+{
+  "description": "A section whose key normalizes to change log is plugin-owned.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books",
+    "sections": [
+      {
+        "section": "Change Log",
+        "body": "- 2026-11-07 studio-dev: written"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "sections[0].section",
+        "reason": "plugin_owned"
+      }
+    },
+    "warnings": []
+  }
+}

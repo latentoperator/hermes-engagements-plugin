@@ -1,0 +1,55 @@
+{
+  "description": "Unparseable YAML keeps the record recognizable through the marker scan: kind and the scanned id and name survive, properties are null and the body is still sectioned.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Broken YAML/Client.md",
+      "text": "---\nengagements: client\nid: broken-yaml\nname: Broken YAML\nbad: [unclosed\n---\n\n## Summary\nUnparseable frontmatter, readable id and name.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Broken YAML/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "broken-yaml",
+      "kind": "client",
+      "path": "Broken YAML/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Broken YAML/Client.md>",
+      "valid": false,
+      "properties": null,
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Unparseable frontmatter, readable id and name.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 58,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Broken YAML/Client.md"
+      }
+    ]
+  }
+}

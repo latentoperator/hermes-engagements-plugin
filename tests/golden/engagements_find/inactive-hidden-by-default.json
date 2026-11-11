@@ -1,0 +1,27 @@
+{
+  "description": "include_inactive defaults to false, so both Maple records (former client, historical project) are hidden and total counts only matches.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "maple"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [],
+      "total": 0,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

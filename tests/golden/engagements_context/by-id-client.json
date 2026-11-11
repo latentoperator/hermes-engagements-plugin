@@ -1,0 +1,103 @@
+{
+  "description": "Reading a client by id returns every section in file order, its properties and all of its projects, active and inactive. TOOLS.md 'engagements_context' (Pagination and Data) keeps a section's trailing blank lines, always includes projects on a client read and carries client only on a project read, so each body keeps them and this case has projects but no client key.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-bakery"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-bakery",
+      "kind": "client",
+      "path": "Acme Bakery/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Acme Bakery/Client.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "client",
+        "id": "acme-bakery",
+        "name": "Acme Bakery",
+        "aliases": [
+          "Acme"
+        ],
+        "status": "active",
+        "updated": "2026-11-05"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Three-location bakery. Owner-run; values speed over polish.\n\n",
+          "partial": false
+        },
+        {
+          "title": "Current work",
+          "text": "- Website refresh (see project `acme-website-2026`)\n\n",
+          "partial": false
+        },
+        {
+          "title": "Contacts",
+          "text": "- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am\n\n",
+          "partial": false
+        },
+        {
+          "title": "Communication preferences",
+          "text": "- Weekly status by email on Fridays\n\n",
+          "partial": false
+        },
+        {
+          "title": "Locations",
+          "text": "- Shared docs: ~/clients/acme/docs\n- Brand assets: https://drive.example/acme-brand\n\n",
+          "partial": false
+        },
+        {
+          "title": "Systems of record",
+          "text": "- Invoicing: accounting customer \"Acme Bakery\" (reference only)\n- Credentials: password manager collection \"Acme\" (never copy values here)\n\n",
+          "partial": false
+        },
+        {
+          "title": "History",
+          "text": "\n",
+          "partial": false
+        },
+        {
+          "title": "Unconfirmed",
+          "text": "- Prefers Friday updates (source: kickoff notes 2026-11-05, assumed)\n\n",
+          "partial": false
+        },
+        {
+          "title": "Change log",
+          "text": "- 2026-11-05 owner: created from onboarding conversation\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 752,
+      "projects": [
+        {
+          "id": "acme-website-2026",
+          "name": "Website 2026",
+          "status": "active",
+          "locations": [
+            "~/clients/acme/website-2026",
+            "~/clients/shared",
+            "https://git.example/studio/acme-site"
+          ]
+        }
+      ],
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

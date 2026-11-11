@@ -1,0 +1,49 @@
+{
+  "description": "limit 2 keeps two of five matches and sets truncated; total still counts every match.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "",
+    "limit": 2
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "acme-bakery",
+          "kind": "client",
+          "name": "Acme Bakery",
+          "status": "active",
+          "client": null,
+          "path": "Acme Bakery/Client.md",
+          "valid": true,
+          "match": null
+        },
+        {
+          "id": "riverbend-dental",
+          "kind": "client",
+          "name": "Riverbend Dental",
+          "status": "active",
+          "client": null,
+          "path": "Riverbend Dental/Client.md",
+          "valid": true,
+          "match": null
+        }
+      ],
+      "total": 5,
+      "truncated": true,
+      "next_offset": 2
+    },
+    "warnings": []
+  }
+}

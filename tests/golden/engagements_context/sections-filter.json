@@ -1,0 +1,72 @@
+{
+  "description": "The sections filter returns only the requested sections, in file order regardless of request order, and the view length covers just those spans.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-bakery",
+    "sections": [
+      "Contacts",
+      "Summary"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "acme-bakery",
+      "kind": "client",
+      "path": "Acme Bakery/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Acme Bakery/Client.md>",
+      "valid": true,
+      "properties": {
+        "engagements": "client",
+        "id": "acme-bakery",
+        "name": "Acme Bakery",
+        "aliases": [
+          "Acme"
+        ],
+        "status": "active",
+        "updated": "2026-11-05"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Three-location bakery. Owner-run; values speed over polish.\n\n",
+          "partial": false
+        },
+        {
+          "title": "Contacts",
+          "text": "- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am\n\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 190,
+      "projects": [
+        {
+          "id": "acme-website-2026",
+          "name": "Website 2026",
+          "status": "active",
+          "locations": [
+            "~/clients/acme/website-2026",
+            "~/clients/shared",
+            "https://git.example/studio/acme-site"
+          ]
+        }
+      ],
+      "raw_text": null
+    },
+    "warnings": []
+  }
+}

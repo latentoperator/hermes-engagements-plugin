@@ -1,0 +1,64 @@
+{
+  "description": "A project whose client is unknown is invalid with unknown_client; the client object carries the id it names and a null name.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Lost/Projects/Lost Project.md",
+      "text": "---\nengagements: project\nclient: ghost-client\nid: lost-project\nname: Lost Project\nstatus: active\n---\n\n## Purpose\nIts client does not exist.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Lost/Projects/Lost Project.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "lost-project",
+      "kind": "project",
+      "path": "Lost/Projects/Lost Project.md",
+      "library_root": "<root>",
+      "rev": "<rev:Lost/Projects/Lost Project.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "project",
+        "client": "ghost-client",
+        "id": "lost-project",
+        "name": "Lost Project",
+        "status": "active"
+      },
+      "sections": [
+        {
+          "title": "Purpose",
+          "text": "Its client does not exist.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 38,
+      "client": {
+        "id": "ghost-client",
+        "name": null
+      },
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Lost/Projects/Lost Project.md"
+      }
+    ]
+  }
+}

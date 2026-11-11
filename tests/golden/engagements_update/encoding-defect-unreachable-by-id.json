@@ -1,0 +1,42 @@
+{
+  "description": "An encoding defect leaves the record's id unreadable, so update by id is not_found rather than malformed; the malformed envelope needs a path, which engagements_update does not take. Ruled in TOOLS.md 'Malformed records'.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Arcade Print Shop/Client.md",
+      "hex": "2d2d2d0a656e676167656d656e74733a20636c69656e740a69643a206172636164652d7072696e742d73686f700a6e616d653a20417263616465205072696e742053686f700a7374617475733a207061757365640a757064617465643a20323032362d31312d30350a2d2d2d0a0a2320417263616465205072696e742053686f700a0a23232053756d6d6172790a506f737465727320696e20ff2073697a65732e0a0a2323204368616e6765206c6f670a2d20323032362d31312d30352064616e74653a20637265617465642066726f6d206f6e626f617264696e6720636f6e766572736174696f6e0a"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "arcade-print-shop",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "append_to_section",
+        "section": "Summary",
+        "text": "- Called about the spring order."
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "<message>",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  }
+}

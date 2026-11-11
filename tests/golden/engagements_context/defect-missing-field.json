@@ -1,0 +1,59 @@
+{
+  "description": "A record without an id is malformed/missing_field: the id reads as null and no id is invented.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Broken/Client.md",
+      "text": "---\nengagements: client\nname: No Id Client\nstatus: active\n---\n\n## Summary\nMissing id.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Broken/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": null,
+      "kind": "client",
+      "path": "Broken/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Broken/Client.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "client",
+        "name": "No Id Client",
+        "status": "active"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Missing id.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 23,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Broken/Client.md"
+      }
+    ]
+  }
+}

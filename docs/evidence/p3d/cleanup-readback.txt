@@ -1,0 +1,14 @@
+ls: cannot access '/home/<user>/.cache/<scratch>-eng': No such file or directory
+procs:
+0
+0
+0
+lock
+{"locked":true,"requested":true,"pending":false,"sessionLocked":true,"secure":true,"realSc
+{"enabled":true,"stayAwake":false,"stayAwakeStateLoaded":true,"stayAwakeStatePath":"/home/
+267 755 2026-11-06 22:42:48.931319872 -0600 /home/<user>/.local/share/applications/com.nousresearch.hermes.desktop
+76 755 2026-09-24 20:54:43.909675430 -0500 /home/<user>/.local/bin/hermes
+com.nousresearch.hermes.desktop
+2026-10-27 07:33:53.928937951 -0500 /home/<user>/.hermes
+2026-10-26 20:54:54.640356622 -0500 $HOME/.hermes/config.yaml
+1270 /usr/bin/python3 /home/<user>/.local/share/herdr-ports/hermes_bridge.py

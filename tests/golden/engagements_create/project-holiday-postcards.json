@@ -1,0 +1,38 @@
+{
+  "description": "TOOLS.md create example: a project for riverbend-dental with one location and a source is rendered from the 4.3 template.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "project",
+    "name": "Holiday Postcards 2026",
+    "client": "riverbend-dental",
+    "properties": {
+      "locations": [
+        "~/clients/riverbend/postcards-2026"
+      ]
+    },
+    "source": "kickoff call 2026-11-06"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "holiday-postcards-2026",
+      "kind": "project",
+      "path": "Riverbend Dental/Projects/Holiday Postcards 2026.md",
+      "rev": "<rev_after:Riverbend Dental/Projects/Holiday Postcards 2026.md>",
+      "similar_overridden": []
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Riverbend Dental/Projects/Holiday Postcards 2026.md": "---\nengagements: project\nid: holiday-postcards-2026\nclient: riverbend-dental\nname: Holiday Postcards 2026\naliases: []\nstatus: active\nlocations: [~/clients/riverbend/postcards-2026]\nupdated: 2026-11-07\n---\n\n## Purpose\n\n## Notes\n\n## Change log\n- 2026-11-07 studio-dev: created project (source: kickoff call 2026-11-06)\n"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "engagements",
+  "label": "Clients",
+  "description": "Your clients and projects from the Engagements library, read-only.",
+  "icon": "Users",
+  "version": "1.0.0-rc1",
+  "tab": { "path": "/engagements", "position": "end" },
+  "entry": "dist/index.js",
+  "api": "plugin_api.py"
+}

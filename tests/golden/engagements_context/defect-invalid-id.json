@@ -1,0 +1,60 @@
+{
+  "description": "A malformed id is reported, not coerced: valid false with invalid_id while the id string reads as written. SPEC-QUESTION: TOOLS.md nulls fields the reader could not read; an invalid id is read, so it is returned as written.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Bad Id/Client.md",
+      "text": "---\nengagements: client\nid: Bad_ID\nname: Bad Id Client\nstatus: active\n---\n\n## Summary\nInvalid id.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Bad Id/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "Bad_ID",
+      "kind": "client",
+      "path": "Bad Id/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Bad Id/Client.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "client",
+        "id": "Bad_ID",
+        "name": "Bad Id Client",
+        "status": "active"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Invalid id.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 23,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Bad Id/Client.md"
+      }
+    ]
+  }
+}

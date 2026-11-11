@@ -1,0 +1,49 @@
+{
+  "description": "A supplied section replaces its template body, a non-template section lands before Change log, and aliases/status come from the request.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Juniper Row Coffee",
+    "properties": {
+      "aliases": [
+        "Juniper",
+        "JR Coffee"
+      ],
+      "status": "paused"
+    },
+    "sections": [
+      {
+        "section": "Summary",
+        "body": "Single-origin roaster with two cafes."
+      },
+      {
+        "section": "Preferred vendors",
+        "body": "- Oat milk: Example Dairy Co"
+      }
+    ],
+    "source": "onboarding call 2026-11-07"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "juniper-row-coffee",
+      "kind": "client",
+      "path": "Juniper Row Coffee/Client.md",
+      "rev": "<rev_after:Juniper Row Coffee/Client.md>",
+      "similar_overridden": []
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Juniper Row Coffee/Client.md": "---\nengagements: client\nid: juniper-row-coffee\nname: Juniper Row Coffee\naliases: [Juniper, JR Coffee]\nstatus: paused\nupdated: 2026-11-07\n---\n\n# Juniper Row Coffee\n\n## Summary\nSingle-origin roaster with two cafes.\n\n## Current work\n\n## Contacts\n\n## Communication preferences\n\n## Locations\n\n## Systems of record\n\n## History\n\n## Unconfirmed\n\n## Preferred vendors\n- Oat milk: Example Dairy Co\n\n## Change log\n- 2026-11-07 studio-dev: created client (source: onboarding call 2026-11-07)\n"
+  }
+}

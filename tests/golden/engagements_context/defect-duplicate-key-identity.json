@@ -1,0 +1,60 @@
+{
+  "description": "A duplicated identity key is a global defect: duplicate_key blocks the whole record and the field reads as null. SPEC-QUESTION: TOOLS.md also says a duplicated key is omitted from properties; the parser keeps the identity key with a null value, which is what this case expects.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Double Id/Client.md",
+      "text": "---\nengagements: client\nid: double-id\nid: double-id\nname: Double Id Client\nstatus: active\n---\n\n## Summary\nTwo id lines.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Double Id/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": null,
+      "kind": "client",
+      "path": "Double Id/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Double Id/Client.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "client",
+        "id": null,
+        "name": "Double Id Client",
+        "status": "active"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Two id lines.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 25,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Double Id/Client.md"
+      }
+    ]
+  }
+}

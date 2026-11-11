@@ -1,0 +1,32 @@
+{
+  "description": "updated is plugin-owned, so a create naming it is invalid_op plugin_owned.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books",
+    "properties": {
+      "updated": "2026-11-08"
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "properties.updated",
+        "reason": "plugin_owned"
+      }
+    },
+    "warnings": []
+  }
+}

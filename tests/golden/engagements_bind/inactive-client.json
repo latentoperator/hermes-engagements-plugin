@@ -1,0 +1,30 @@
+{
+  "description": "A former client cannot be bound: invalid_binding names the record and the reason, and nothing is stored.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "Maple"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_binding",
+      "message": "Cannot bind maple-street-florist: it is inactive. Nothing was bound.",
+      "details": {
+        "reason": "record_inactive",
+        "record": "maple-street-florist"
+      }
+    },
+    "warnings": []
+  },
+  "state_after": null
+}

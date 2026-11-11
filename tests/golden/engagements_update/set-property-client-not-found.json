@@ -1,0 +1,36 @@
+{
+  "description": "set_property client naming an existing-looking id that is not a client is not_found from value validation.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-website-2026",
+    "base_rev": "<rev:Acme Bakery/Projects/Website 2026.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "client",
+        "value": "northwind-traders"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "not_found",
+      "message": "Client not found.",
+      "details": {
+        "reason": "no_match"
+      }
+    },
+    "warnings": []
+  }
+}

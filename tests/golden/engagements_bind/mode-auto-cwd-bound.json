@@ -1,0 +1,83 @@
+{
+  "description": "mode auto resolves from cwd: the folder inside the project's location binds client and project and remembers the identity in state.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "mkdir",
+      "path": "<home>/clients/acme/website-2026"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": "<home>/clients/acme/website-2026",
+    "surface": "cli",
+    "binding": {
+      "mode": "auto"
+    }
+  },
+  "config": {},
+  "request": {
+    "mode": "auto"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "mode": "auto",
+      "state": "bound",
+      "method": "auto",
+      "evidence": "auto: cwd ~/clients/acme/website-2026 matched project acme-website-2026",
+      "client": {
+        "id": "acme-bakery",
+        "name": "Acme Bakery",
+        "status": "active",
+        "rev": "<rev:Acme Bakery/Client.md>",
+        "path": "Acme Bakery/Client.md",
+        "sections": [
+          {
+            "title": "Summary",
+            "text": "Three-location bakery. Owner-run; values speed over polish.",
+            "partial": false
+          },
+          {
+            "title": "Contacts",
+            "text": "- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am",
+            "partial": false
+          },
+          {
+            "title": "Locations",
+            "text": "- Shared docs: ~/clients/acme/docs\n- Brand assets: https://drive.example/acme-brand",
+            "partial": false
+          }
+        ]
+      },
+      "project": {
+        "id": "acme-website-2026",
+        "name": "Website 2026",
+        "status": "active",
+        "rev": "<rev:Acme Bakery/Projects/Website 2026.md>",
+        "path": "Acme Bakery/Projects/Website 2026.md",
+        "locations": [
+          "~/clients/acme/website-2026",
+          "~/clients/shared",
+          "https://git.example/studio/acme-site"
+        ]
+      },
+      "active_projects": [
+        {
+          "id": "acme-website-2026",
+          "name": "Website 2026",
+          "status": "active"
+        }
+      ],
+      "candidates": []
+    },
+    "warnings": []
+  },
+  "state_after": {
+    "mode": "auto",
+    "client": "acme-bakery",
+    "project": "acme-website-2026"
+  }
+}

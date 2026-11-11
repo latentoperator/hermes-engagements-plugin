@@ -1,0 +1,34 @@
+{
+  "description": "An offset at or past the view length is invalid_op/offset_out_of_range, checked before the rev comparison even though the given rev is current.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-bakery",
+    "sections": [
+      "Summary"
+    ],
+    "offset": 1000,
+    "rev": "<rev:Acme Bakery/Client.md>"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "offset",
+        "reason": "offset_out_of_range"
+      }
+    },
+    "warnings": []
+  }
+}

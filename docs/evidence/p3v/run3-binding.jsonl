@@ -1,0 +1,7 @@
+{"id": 1, "result": {"result": {"type": "undefined"}}}
+{"id": 2, "result": {"result": {"type": "object", "value": {"t": 1794159078963, "chip": null}}}}
+{"id": 3, "result": {"result": {"type": "undefined"}}}
+{"id": 4, "result": {}}
+{"id": 5, "result": {}}
+{"id": 6, "result": {}}
+{"id": 7, "result": {"result": {"type": "object", "value": {"t": 1794159083981, "chip": "Riverbend Dental", "text": "SESSIONS\nBOTS\nNew session\nCtrl\nN\nCapabilities\nMessaging\nArtifacts\nScheduled jobs\nClients\nPINNED\nShift-click a chat to pin\nSESSIONS\n/client riverbend-dental\nnow\necho: CALL engagements_context {\"id\":\"acme-website-2026\"}\nnow\n/CLIENT RIVERBEND-DENTAL\n/client\nBinding updated.\nMode: explicit\nBound (stored). Client: Riverbend Dental (riverbend-dental)\nEvidence: explicit 11:31\nAutomatic binding from the folder is not available on this surface.\nScroll to bottom\n\u280b\n\u2819\n\u2839\n\u2838\n\u283c\n\u2834\n\u2826\n\u2827\n\u2807\n\u280f\nWaking up default\u2026\nStub Model\nMed\nBackend\nready\n<user>\nRiverbend Dental\nSmart\nv0.23.0+127"}}}}

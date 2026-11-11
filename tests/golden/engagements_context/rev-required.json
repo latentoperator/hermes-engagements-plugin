@@ -1,0 +1,30 @@
+{
+  "description": "offset greater than zero without rev is invalid_op with field rev, before the library is opened.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "id": "acme-bakery",
+    "offset": 1
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "rev",
+        "reason": "rev_required"
+      }
+    },
+    "warnings": []
+  }
+}

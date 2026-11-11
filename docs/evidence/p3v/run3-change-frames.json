@@ -1,0 +1,10 @@
+[
+ {
+  "wall": 1794159058.8878517,
+  "payloadData": "{\"jsonrpc\": \"2.0\", \"method\": \"event\", \"params\": {\"type\": \"plugin.engagements.changed\", \"session_id\": \"\", \"payload\": {\"what\": \"library\"}}}"
+ },
+ {
+  "wall": 1794159079.394997,
+  "payloadData": "{\"jsonrpc\": \"2.0\", \"method\": \"event\", \"params\": {\"type\": \"plugin.engagements.changed\", \"session_id\": \"\", \"payload\": {\"what\": \"binding\"}}}"
+ }
+]

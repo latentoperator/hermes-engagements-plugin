@@ -1,0 +1,41 @@
+{
+  "description": "A field the selected per-op schema does not allow is unexpected_field.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "acme-bakery",
+    "base_rev": "<rev:Acme Bakery/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "status",
+        "value": "paused",
+        "values": [
+          "x"
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid operation.",
+      "details": {
+        "op_index": 0,
+        "field": "values",
+        "reason": "unexpected_field"
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,19 @@
+name: engprobe
+version: 0.0.1
+manifest_version: 2
+description: Throwaway Phase 0 runtime probe for Hermes Engagements. Not shipped.
+license: MIT
+provides_tools:
+  - engprobe_where
+  - engprobe_bind
+  - engprobe_lock
+provides_hooks:
+  - pre_llm_call
+  - post_compaction
+  - on_session_start
+  - on_session_end
+  - on_session_reset
+  - on_session_finalize
+config_schema:
+  log_path: {type: str, default: "", description: "JSONL evidence log (default under the plugin data dir)"}
+  library_root: {type: str, default: "", description: "Shared root for S6 lock/visibility probes"}

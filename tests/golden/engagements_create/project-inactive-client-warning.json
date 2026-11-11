@@ -1,0 +1,39 @@
+{
+  "description": "Creating a project for a former client is allowed and warns with record_invalid naming that client.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "project",
+    "name": "Spring Window 2026",
+    "client": "maple-street-florist",
+    "source": "spring planning 2026-11-07"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "spring-window-2026",
+      "kind": "project",
+      "path": "Maple Street Florist/Projects/Spring Window 2026.md",
+      "rev": "<rev_after:Maple Street Florist/Projects/Spring Window 2026.md>",
+      "similar_overridden": []
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "path": "Maple Street Florist/Client.md",
+        "message": "Client 'maple-street-florist' is not active."
+      }
+    ]
+  },
+  "files_after": {
+    "Maple Street Florist/Projects/Spring Window 2026.md": "---\nengagements: project\nid: spring-window-2026\nclient: maple-street-florist\nname: Spring Window 2026\naliases: []\nstatus: active\nlocations: []\nupdated: 2026-11-07\n---\n\n## Purpose\n\n## Notes\n\n## Change log\n- 2026-11-07 studio-dev: created project (source: spring planning 2026-11-07)\n"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "description": "TOOLS.md's mismatch example: the project belongs to another client, nothing is bound and nothing is stored.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "client": "riverbend-dental",
+    "project": "acme-website-2026"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_binding",
+      "message": "Project acme-website-2026 belongs to acme-bakery, not riverbend-dental. Nothing was bound.",
+      "details": {
+        "project": "acme-website-2026",
+        "project_client": "acme-bakery",
+        "requested_client": "riverbend-dental"
+      }
+    },
+    "warnings": []
+  },
+  "state_after": null
+}

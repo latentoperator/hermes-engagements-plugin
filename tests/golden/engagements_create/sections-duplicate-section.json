@@ -1,0 +1,39 @@
+{
+  "description": "Two sections whose keys collide after normalization are duplicate_section on the second entry.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "kind": "client",
+    "name": "Ridgeway Books",
+    "sections": [
+      {
+        "section": "Summary",
+        "body": "A bookshop."
+      },
+      {
+        "section": "  summary ",
+        "body": "Second summary."
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "invalid_op",
+      "message": "Invalid argument.",
+      "details": {
+        "field": "sections[1].section",
+        "reason": "duplicate_section"
+      }
+    },
+    "warnings": []
+  }
+}

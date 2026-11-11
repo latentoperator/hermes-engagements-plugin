@@ -1,0 +1,34 @@
+{
+  "description": "With .engagements/library.yaml deleted the library cannot be opened: library_missing with the library module's own message and details.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "delete",
+      "path": ".engagements/library.yaml"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "acme"
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "library_missing",
+      "message": "The library has no .engagements/library.yaml.",
+      "details": {
+        "reason": "missing_library_yaml",
+        "path": ".engagements/library.yaml"
+      }
+    },
+    "warnings": []
+  }
+}

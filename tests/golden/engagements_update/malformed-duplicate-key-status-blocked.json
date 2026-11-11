@@ -1,0 +1,47 @@
+{
+  "description": "A duplicated status key is a targeted defect: an op that rewrites status is malformed.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Arcade Print Shop/Client.md",
+      "text": "---\nengagements: client\nid: arcade-print-shop\nname: Arcade Print Shop\nstatus: paused\nstatus: active\nupdated: 2026-11-05\n---\n\n# Arcade Print Shop\n\n## Summary\nPosters, banners and event signage for the neighbourhood.\n\n## Contacts\n- Lee Okafor | owner | lee@arcade-print.example\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "arcade-print-shop",
+    "base_rev": "<rev:Arcade Print Shop/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "set_property",
+        "key": "status",
+        "value": "active"
+      }
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "malformed",
+      "message": "Record has defects; run doctor.",
+      "details": {
+        "path": "Arcade Print Shop/Client.md",
+        "defects": [
+          {
+            "kind": "duplicate_key"
+          }
+        ]
+      }
+    },
+    "warnings": []
+  }
+}

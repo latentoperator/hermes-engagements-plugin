@@ -1,0 +1,46 @@
+{
+  "description": "A targeted duplicate_key blocks only ops whose footprint touches it; an op on another section still succeeds.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Arcade Print Shop/Client.md",
+      "text": "---\nengagements: client\nid: arcade-print-shop\nname: Arcade Print Shop\nstatus: paused\nstatus: active\nupdated: 2026-11-05\n---\n\n# Arcade Print Shop\n\n## Summary\nPosters, banners and event signage for the neighbourhood.\n\n## Contacts\n- Lee Okafor | owner | lee@arcade-print.example\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "request": {
+    "id": "arcade-print-shop",
+    "base_rev": "<rev:Arcade Print Shop/Client.md>",
+    "source": "owner email 2026-11-07",
+    "ops": [
+      {
+        "op": "append_to_section",
+        "section": "Summary",
+        "text": "- Trade account opened."
+      }
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "arcade-print-shop",
+      "path": "Arcade Print Shop/Client.md",
+      "new_rev": "<rev_after:Arcade Print Shop/Client.md>",
+      "rebased": false,
+      "applied": 1,
+      "change_log_line": "- 2026-11-07 studio-dev: append to Summary (source: owner email 2026-11-07)"
+    },
+    "warnings": []
+  },
+  "files_after": {
+    "Arcade Print Shop/Client.md": "---\nengagements: client\nid: arcade-print-shop\nname: Arcade Print Shop\nstatus: paused\nstatus: active\nupdated: 2026-11-07\n---\n\n# Arcade Print Shop\n\n## Summary\nPosters, banners and event signage for the neighbourhood.\n- Trade account opened.\n\n## Contacts\n- Lee Okafor | owner | lee@arcade-print.example\n\n## Change log\n- 2026-11-05 owner: created from onboarding conversation\n- 2026-11-07 studio-dev: append to Summary (source: owner email 2026-11-07)\n"
+  }
+}

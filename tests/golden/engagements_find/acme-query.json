@@ -1,0 +1,54 @@
+{
+  "description": "TOOLS.md example: 'acme' matches the client on its exact alias and the project on its id prefix, so tier order puts the client first. TOOLS.md 'engagements_find' makes that tier rule normative, so the client's match field is alias.",
+  "fixture": "studio",
+  "setup": [],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "query": "acme"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "results": [
+        {
+          "id": "acme-bakery",
+          "kind": "client",
+          "name": "Acme Bakery",
+          "status": "active",
+          "client": null,
+          "path": "Acme Bakery/Client.md",
+          "valid": true,
+          "match": {
+            "field": "alias",
+            "value": "Acme"
+          }
+        },
+        {
+          "id": "acme-website-2026",
+          "kind": "project",
+          "name": "Website 2026",
+          "status": "active",
+          "client": "acme-bakery",
+          "path": "Acme Bakery/Projects/Website 2026.md",
+          "valid": true,
+          "match": {
+            "field": "id",
+            "value": "acme-website-2026"
+          }
+        }
+      ],
+      "total": 2,
+      "truncated": false,
+      "next_offset": null
+    },
+    "warnings": []
+  }
+}

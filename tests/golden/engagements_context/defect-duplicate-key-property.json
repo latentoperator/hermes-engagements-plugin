@@ -1,0 +1,59 @@
+{
+  "description": "A duplicated non-identity key is a targeted defect: the key is omitted from properties (never one silently chosen) and the record is invalid.",
+  "fixture": "studio",
+  "setup": [
+    {
+      "op": "write",
+      "path": "Two Statuses/Client.md",
+      "text": "---\nengagements: client\nid: two-statuses\nname: Two Statuses\nstatus: active\nstatus: former\n---\n\n## Summary\nTwo status lines.\n"
+    }
+  ],
+  "clock": "2026-11-07T14:02:00-06:00",
+  "profile": "studio-dev",
+  "session": {
+    "id": "sess-1",
+    "cwd": null,
+    "surface": "cli",
+    "binding": null
+  },
+  "config": {},
+  "request": {
+    "path": "Two Statuses/Client.md"
+  },
+  "expected": {
+    "ok": true,
+    "data": {
+      "id": "two-statuses",
+      "kind": "client",
+      "path": "Two Statuses/Client.md",
+      "library_root": "<root>",
+      "rev": "<rev:Two Statuses/Client.md>",
+      "valid": false,
+      "properties": {
+        "engagements": "client",
+        "id": "two-statuses",
+        "name": "Two Statuses"
+      },
+      "sections": [
+        {
+          "title": "Summary",
+          "text": "Two status lines.\n",
+          "partial": false
+        }
+      ],
+      "missing_sections": [],
+      "offset": 0,
+      "next_offset": null,
+      "view_length": 29,
+      "projects": [],
+      "raw_text": null
+    },
+    "warnings": [
+      {
+        "code": "record_invalid",
+        "message": "<message>",
+        "path": "Two Statuses/Client.md"
+      }
+    ]
+  }
+}

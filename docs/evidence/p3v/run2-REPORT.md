@@ -1,0 +1,26 @@
+# Phase 3V Desktop acceptance — run 2
+
+**Result: not accepted.** Tested Engagements archive `415479f` with scratch Hermes Desktop source `6b58832d8e8d87c1e380fbaa81a1299f88128057`, behind the test desktop's lock. The agent plugin really loaded and executed tools; the details pane still overflows. Only fictional fixture data and a loopback stub model were used.
+
+## Build and version
+
+`version.txt`: full fork clone plus authentic upstream `v0.23.0` tag; `git describe --tags` returned `v0.23.0-127-g6b58832d8e` (Git chose a longer unique abbreviation than the requested illustrative `...d8`); scratch CLI returned `Hermes Agent v0.23.0+127.g6b58832`. `build.txt`: source build succeeded. `path-setup.txt`: inspected the requested entry/data path files and related resolver; `main.ts` applies the environment user-data override. Electron was launched with both the environment override and `--user-data-dir` pointing to scratch.
+
+| Check | Result | Evidence and qualification |
+|---|---|---|
+| A. Plugin loaded | **PASS (runtime); logging receipt incomplete** | `plugin-loaded.txt`, `chat.txt`, `refresh.txt`: plugin enabled, its API mounted, slash command bound, and both agent tools completed successfully. No `engagements skipped` line in the searched logs. The requested literal gateway “plugin loaded” log line was not observed; successful execution is stronger runtime evidence but not that specific log receipt. First attempt had plugin disabled and API 404; it was enabled in scratch and relaunched before acceptance. |
+| B. Layout | **FAIL** | `layout.txt`, `narrow.txt`, `acme.png`: page width 937 px and max details-element right 1222.31 px; at emulated width 900 max remains 1222.31 px. Right-hand controls/content are clipped. A record path has `text-overflow: ellipsis`, but the pane itself extends outside the window, so that does not satisfy the requirement. |
+| C. Content | **NOT EXERCISED (complete criterion)** | `layout.txt`, `privacy.txt`: ID, client, record file, two folder rows, reference link and `2 folders` text observed; Maple project says `not found here`. Found-dot computed color, non-warning badge styling and all label/indent geometry were not fully measured; clipping prevents a complete pass. |
+| D. Prefill and bind | **PASS** | `chat.txt`: unsent `/client acme-bakery` in composer, no user message and stub log absent; chip absent before sending. Enter produced `Binding updated` / explicit Acme Bakery; chip showed `Acme Bakery` after approximately 856 ms without reload/navigation. |
+| E. Privacy | **PASS** | `privacy.txt`: bound chip `A. B.`, names masked, IDs/paths/text hidden; after reload and reopening Clients switch remained checked; switched off and confirmed `false`. Privacy does not mask host chat history/sidebar, which is outside these plugin-page assertions. |
+| F. Live refresh | **NOT EXERCISED (automatic mounted-view refresh)** | `refresh.txt`: real agent context returned rev `3110c7f65742e67e`; update returned `ok:true`, new rev `4d8a13839f8de40f`. Navigating back without refresh or selection showed “Pick a client or project”: route unmounted and selection was lost. Thus no already-selected rendered record was available to test automatic refresh. No simultaneous visible chat/Clients view was established. Do not treat a later record selection as a refresh test. |
+| G. Console | **NOT EXERCISED (whole-run coverage)** | `events.jsonl`: 92 CDP events; no matching Engagements/plugin warning/error or `plugin.engagements.changed`, and no `Runtime.exceptionThrown` in the collected events. Listener started after initial renderer startup on each launch, so cannot claim whole-run coverage. |
+| H. Read-only browsing | **PASS** | `inventories.txt`, `readonly.txt`: plugin-data file lists and every library Markdown SHA-256 unchanged during a page-viewing stretch with no agent turns. Subsequent deliberate update occurred after this comparison. |
+
+## Defect
+
+At default size, expected the record pane and descendants inside the 937 px page; observed rightmost edge 1222.31 px and visible clipping, including the Start a chat button. At emulated 900 px width the same right edge persisted. Suspected area, not proven root cause: `desktop/plugin.js:264-265` details root lacks a minimum-width constraint, and `:402-416` grid/ScrollArea interaction may retain intrinsic width despite the updated `minmax(0, 1fr)` tracks. No causal fix was attempted.
+
+## Isolation and cleanup
+
+`cleanup.txt`: all test units inactive, owned exact PIDs stopped, no scratch processes or listeners on 18767/18768, scratch tree removed. Real launcher and MIME files matched their backups; no restoration needed. Real `config.yaml` and `state.db` hashes matched the requested baselines. Before/after `~/.config/Hermes` metadata and <=50 MB regular-file hash diffs were empty, including unchanged `DevToolsActivePort`; baseline traversal printed a working-directory restoration warning because sudo inherited inaccessible `/home/<another-user>`, but produced 908 metadata entries and 833 hashes, and subsequent diff was empty. Lock remained true and `stayAwake` false; recorded ChatGPT PIDs remained present and checked Codex PIDs were present. No copy or reveal buttons were clicked. An initial lock read without a login shell failed (`<DESKTOP_SHELL>_PATH`); a subsequent login-shell read succeeded.
