@@ -122,7 +122,8 @@ def test_readme_opens_with_a_quick_start_that_leads_somewhere():
     assert "## Quick start" in text
     assert text.index("## Quick start") < text.index("## Requirements")
     quick = quick_start()
-    assert "hermes plugins install <git-url> --enable" in quick
+    # The release repository is public, so a stranger gets a command that runs as written.
+    assert "hermes plugins install latentoperator/hermes-engagements-plugin --enable" in quick
     assert "Add a client:" in quick
     assert "docs/USER-GUIDE.md" in quick
     assert "demo/README.md" in quick

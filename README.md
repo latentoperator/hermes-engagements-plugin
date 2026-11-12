@@ -1,31 +1,116 @@
 # Hermes Engagements
 
-Engagements gives Hermes agents a maintained client foundation. You add a client by talking or pasting notes, the agent drafts a short record you can correct, and any agent working for that client can then find who they are, who to talk to, how they like to work, which projects exist and where the real documents and repos live.
+A client notebook for your Hermes agents.
 
-Engagements does not run work, police tools, send anything, bill anyone, or claim to isolate clients from each other. It is a small, file-based memory for client and project context. Version `1.0.0-rc1` is the v1 release candidate.
+Hermes is a powerful tool for shipping work to clients, no matter the industry or vertical. Engagements gives Hermes agents a maintained client foundation. Add a client or project with the buttons on the Clients page in Hermes Desktop, or by talking or pasting notes in any chat. The agent drafts a short record you can correct, and any agent working for that client can then find who they are, who to talk to, how they like to work, which projects exist and where the real documents and repos live.
+
+Once a client is in the notebook, you can say "work on Acme" and the agent looks up what it needs, instead of you explaining the client again in every chat.
+
+The records are plain Markdown files on your machine. You can open and edit them in any editor, and several profiles on one machine can share one library, so every agent works from the same record. The `labels` setting changes the words Engagements uses: an agency can call them Accounts and Campaigns, a law practice Clients and Matters. Only the wording changes; the records work the same way.
+
+![The Clients page in Hermes Desktop with the Acme Bakery record open, showing its summary, contacts, communication preferences and locations, with Add a client, Add a project and Start a chat buttons](docs/images/clients-client-record.png)
+
+*The Clients page in Hermes Desktop. Demo data.*
+
+## What a client record looks like
+
+This is Acme Bakery from the fictional [demo kit](demo/README.md), exactly as it sits on disk in `demo/library/Acme Bakery/Client.md`:
+
+```markdown
+---
+engagements: client
+id: acme-bakery
+name: Acme Bakery
+aliases: [Acme]
+status: active
+updated: 2026-11-06
+---
+
+# Acme Bakery
+
+## Summary
+Three-location neighborhood bakery. Owner-run; values speed over polish and hates jargon.
+
+## Current work
+- Website refresh, launching before the spring menu (see project `acme-website-2026`)
+
+## Contacts
+- Jane Rivera | owner, final approver | jane@acme-bakery.example | email preferred, no calls before 10am
+- Theo Park | front-of-house manager | theo@acme-bakery.example | sends menu and photo updates
+
+## Communication preferences
+- Weekly status by email on Fridays, five bullets or fewer
+- Jane signs off on anything customer-facing; Theo cannot approve copy
+
+## Locations
+- Website project folder: ~/engagements-demo/clients/acme/website-2026
+- Brand assets: https://drive.example/acme-brand
+
+## Systems of record
+- Invoicing: accounting customer "Acme Bakery" (reference only)
+- Credentials: password manager collection "Acme" (never copy values here)
+
+## History
+- 2019 site built by another studio; no longer maintained
+
+## Unconfirmed
+- Wants online pre-orders in phase two (source: kickoff call 2026-10-20, assumed)
+
+## Change log
+- 2026-10-20 studio: created client (source: kickoff call)
+- 2026-11-06 studio: append to Contacts (source: email from Jane)
+```
+
+Every client record starts from the same sections. Contacts, communication preferences and locations are what an agent needs before it starts work. `Systems of record` says where invoices and credentials live without copying them. `Unconfirmed` holds anything the agent assumed rather than heard, with its source, so you can confirm or correct it. The `Change log` gets one dated line, with its source, for every update.
+
+Each project gets its own short record under its client, listing the folders, repos and documents the work lives in.
+
+## How it works
+
+To add a client, click **Add a client** on the Clients page, or just ask in plain words or paste your kickoff notes into any chat. To add a project, open the client's record and click **Add a project**. On Desktop each button opens a new chat with the request already written; you press send. Either way, the bundled onboarding skill asks the agent to check for an existing record first, draft only from what you gave it, mark its guesses as unconfirmed, and show you the draft before saving anything.
+
+A chat can be linked to a client in three ways. Start Hermes in a folder one of the client's projects lists, or open a Desktop chat from a Project that points at it, and the session links itself to that project and its client. Name the client in a message and the agent is asked to find it and link it. Or type `/client acme-bakery` and link it yourself. The agent is told which client it is working for and reads the record when it needs the details. If a folder belongs to two projects, nothing is linked and the agent is told both names; it does not guess.
+
+![A Hermes chat linked to Acme Bakery. Asked when Jane expects the next project update, the agent answers from the record: a weekly review email on Wednesdays, five bullets or fewer, Jane approves customer-facing work, and a note that the day was changed and changed back earlier that day](docs/images/chat-client-answer.png)
+
+When something changes, tell the agent: "Jane wants the weekly status on Thursdays now." It updates only that part of the record and adds a dated line with the source to the change log. Every update is checked against the version the agent last read. If someone edited that part in the meantime, nothing is written and the agent is asked to show you both versions.
+
+The Clients page, in Hermes Desktop and the web dashboard, is where you browse the notebook. Search your clients, open a record, see which project folders exist on this machine, and on Desktop start a new chat with `/client` ready to send. With an empty library, **Find clients in my past chats** asks the agent to suggest up to five clients from your earlier conversations, and nothing is saved until you pick one. The page itself never edits a record: the buttons only start chats, and the agent does the writing once you approve. Privacy mode masks names and record text for screen sharing.
+
+## What it is not
+
+Engagements does not run work, send anything, bill anyone or keep clients sealed off from each other (see [Honest limits](#honest-limits)). It is not a CRM: there is no database, pipeline or reporting, only a folder of Markdown records that any agent can find and keep current. It works on local files only and sends nothing over the network.
 
 ## Quick start
 
-1. Install the plugin in the Hermes profile you use. No settings are needed for the first run; [Install](#install) below covers installing from a checkout and the minimum Hermes version.
+1. Install the plugin in the Hermes profile you use. It needs Hermes Agent v0.22.3 or newer, and no settings.
 
    ```bash
-   hermes plugins install <git-url> --enable
+   hermes plugins install latentoperator/hermes-engagements-plugin --enable
    ```
 
-2. Start Hermes and tell it about a client:
+2. Check that it loaded: start a new chat and type `/client`. Before your first client, the reply says no library exists yet, which is normal. If Hermes does not know the command, the plugin is not enabled in this profile.
+
+3. Tell it about a client:
 
    ```text
    Add a client: Harbor Print Shop. Marisol Vega is the owner, marisol@harbor.example,
    she prefers email in the mornings. Their files are in ~/clients/harbor.
    ```
 
-   The agent is asked to check for an existing client, show you a draft, and save only when you say so.
+   The agent checks for an existing client, shows you a draft, and saves when you say so. The library folder is created the first time it is needed.
 
-3. To have later sessions recognise that client on their own, add a project for it and list the folder you work in under its `locations`. Automatic binding starts from a project: a folder on the client's own page is a reference, not a binding route. A session binds automatically only when exactly one active project lists a local folder that exists on this machine and that folder contains the session's working directory. Start the CLI or TUI in that folder, or a Desktop chat from a Project that points at it, and the session binds to the project and its client; the agent is told which ones it is on, and reads the record with `engagements_context` when it needs the details. Otherwise the `engagements:client-work` skill instructs the agent to resolve a client you name in a message and bind it, and `/client <name-or-id>` binds the session directly.
+   On Hermes Desktop you can start the same way from the Clients page: turn on the Desktop half of Engagements under **Capabilities → Plugins**, open **Clients** in the sidebar and click **Add a client**.
 
-Records are plain Markdown files that people can open in any editor or in Obsidian, and several trusted profiles on one host can share one library. The plain-language [user guide](docs/USER-GUIDE.md) explains day-to-day use. The [demo kit](demo/README.md) sets up a small fictional library in a separate profile if you would rather not start with your own client data. Everything from [Requirements](#requirements) down is the technical reference.
+4. To have later sessions recognise that client on their own, add a project for it and list the folder you work in under its `locations`. Automatic binding starts from a project: a folder on the client's own page is a reference, not a binding route. A session binds automatically only when exactly one active project lists a local folder that exists on this machine and that folder contains the session's working directory. Start the CLI or TUI in that folder, or a Desktop chat from a Project that points at it, and the session binds to the project and its client; the agent is told which ones it is on, and reads the record with `engagements_context` when it needs the details. Otherwise the `engagements:client-work` skill instructs the agent to resolve a client you name in a message and bind it, and `/client <name-or-id>` binds the session directly.
+
+To try it without your own client data, the [demo kit](demo/README.md) sets up a small fictional library in a separate profile. The plain-language [user guide](docs/USER-GUIDE.md) covers day-to-day use.
+
+Everything from here down is the technical reference.
 
 ## Requirements
+
+Version `1.0.0-rc1` is the v1 release candidate.
 
 - Hermes Agent v0.22.3 or newer. The plugin uses the public `ctx.session_cwd()` and `ctx.session_surface()` plugin APIs, which first appear in v0.22.3.
 - Python 3.11 or newer, as shipped with Hermes.
@@ -34,14 +119,14 @@ Records are plain Markdown files that people can open in any editor or in Obsidi
 ## Install
 
 ```bash
-hermes plugins install <git-url> --enable
+hermes plugins install latentoperator/hermes-engagements-plugin --enable
 ```
 
 Or install from a checkout:
 
 ```bash
 HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
-git clone <git-url> "$HERMES_HOME/plugins/engagements"
+git clone https://github.com/latentoperator/hermes-engagements-plugin.git "$HERMES_HOME/plugins/engagements"
 hermes plugins enable engagements
 ```
 
@@ -177,7 +262,13 @@ On the CLI and TUI, start the session in the project folder and the binding happ
 
 ### 3. Organize a project
 
-Projects belong to a client and carry local folders, repos and document links. Local paths are what auto-binding matches; URLs are references only. This is `engagements_create` for a project:
+Projects belong to a client and carry local folders, repos and document links. Local paths are what auto-binding matches; URLs are references only.
+
+![The Website 2026 project record for Acme Bakery on the Clients page, showing its project folder, links and references, purpose, notes and change log](docs/images/clients-project-record.png)
+
+*A project record on the Clients page. Demo data.*
+
+This is `engagements_create` for a project:
 
 <!-- example:create-project -->
 ```json

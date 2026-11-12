@@ -2,7 +2,7 @@ name: engagements
 version: 1.0.0-rc1
 manifest_version: 2
 requires_hermes: ">=0.22.3"
-description: A maintained, file-based client foundation for Hermes agents. Find a client, bind a session to it, and keep its record current in plain Markdown.
+description: Hermes is a powerful tool for shipping work to clients, no matter the industry or vertical. Engagements gives it a client notebook. Add a client or project from the Clients page or by pasting notes, approve the draft, and every agent working for that client can look up who to contact, how they like to work and where the files live.
 author: Hopewell MSP
 license: MIT
 python_dependencies:
